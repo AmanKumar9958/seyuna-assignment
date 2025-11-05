@@ -92,6 +92,42 @@ export default function Introduction() {
           <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
         </div>
       </section>
+      <section id="resources" className="mt-12 scroll-mt-24">
+        <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
+        <div className="mt-4 grid gap-6 lg:grid-cols-4">
+          <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>
+          <ResourceCard title="Conversations">Learn about the conversation model and how to create, retrieve, update, delete, and list conversations.</ResourceCard>
+          <ResourceCard title="Messages">Learn about the message model and how to create, retrieve, update, delete, and list messages.</ResourceCard>
+          <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
+        </div>
+      </section>
+      <section id="resources" className="mt-12 scroll-mt-24">
+        <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
+        <div className="mt-4 grid gap-6 lg:grid-cols-4">
+          <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>
+          <ResourceCard title="Conversations">Learn about the conversation model and how to create, retrieve, update, delete, and list conversations.</ResourceCard>
+          <ResourceCard title="Messages">Learn about the message model and how to create, retrieve, update, delete, and list messages.</ResourceCard>
+          <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
+        </div>
+      </section>
+      <section id="resources" className="mt-12 scroll-mt-24">
+        <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
+        <div className="mt-4 grid gap-6 lg:grid-cols-4">
+          <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>
+          <ResourceCard title="Conversations">Learn about the conversation model and how to create, retrieve, update, delete, and list conversations.</ResourceCard>
+          <ResourceCard title="Messages">Learn about the message model and how to create, retrieve, update, delete, and list messages.</ResourceCard>
+          <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
+        </div>
+      </section>
+      <section id="resources" className="mt-12 scroll-mt-24">
+        <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
+        <div className="mt-4 grid gap-6 lg:grid-cols-4">
+          <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>
+          <ResourceCard title="Conversations">Learn about the conversation model and how to create, retrieve, update, delete, and list conversations.</ResourceCard>
+          <ResourceCard title="Messages">Learn about the message model and how to create, retrieve, update, delete, and list messages.</ResourceCard>
+          <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
+        </div>
+      </section>
     </div>
   )
 }
