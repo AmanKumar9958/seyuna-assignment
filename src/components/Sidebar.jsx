@@ -5,24 +5,16 @@ export default function Sidebar() {
         <aside className="hidden w-72 shrink-0 border-r border-white/5 bg-[#18181B] p-6 lg:block">
             <NavGroup
                 title="Guides"
-                items={[
-                'Introduction',
-                'Guides',
-                'Resources',
-                'Quickstart',
-                'SDKs',
-                'Authentication',
-                'Pagination',
-                'Errors',
-                'Webhooks',
-                ]}
-                active="Introduction"
+                items={['Introduction', 'Quickstart', 'SDKs', 'Authentication', 'Pagination', 'Errors', 'Webhooks']}
+                subMap={{ Introduction: ['Guides', 'Resources'], Quickstart: ['Choose your client', 'Making your first API request', 'What’s next?'], SDKs: ['Official libraries'] }}
+                anchorParent="/introduction"
+                anchorMap={{ Guides: 'guides', Resources: 'resources' }}
             />
 
             <NavGroup
                 title="Resources"
                 items={['Contacts', 'Conversations', 'Messages', 'Groups', 'Attachments']}
-                active=""
+                prefix="resources"
             />
         </aside>
     )

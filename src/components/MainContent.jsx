@@ -43,6 +43,16 @@ export default function MainContent() {
             <Card title="Webhooks">Learn to programmatically subscribe to events and receive real-time updates.</Card>
           </div>
         </section>
+
+        <section className="mt-12">
+          <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Card title="Contacts">Learn how to authenticate your API requests securely and manage tokens.</Card>
+            <Card title="Conversations">Understand how to work with large data sets efficiently using pagination.</Card>
+            <Card title="Messages">Read about the different types of errors and how to handle them gracefully.</Card>
+            <Card title="Groups">Learn to programmatically subscribe to events and receive real-time updates.</Card>
+          </div>
+        </section>
       </div>
     </main>
   )
