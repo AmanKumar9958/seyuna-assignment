@@ -4,13 +4,13 @@ import Sidebar from './components/Sidebar.jsx'
 import PreviewToolbar from './components/PreviewToolbar.jsx'
 
 // Pages (guides)
-import Introduction from './pages/Introduction.jsx'
-import Quickstart from './pages/Quickstart.jsx'
-import SDKs from './pages/SDKs.jsx'
-import Authentication from './pages/Authentication.jsx'
-import Pagination from './pages/Pagination.jsx'
-import Errors from './pages/Errors.jsx'
-import Webhooks from './pages/Webhooks.jsx'
+import Introduction from './pages/guides/Introduction.jsx'
+import Quickstart from './pages/guides/Quickstart.jsx'
+import SDKs from './pages/guides/SDKs.jsx'
+import Authentication from './pages/guides/Authentication.jsx'
+import Pagination from './pages/guides/Pagination.jsx'
+import Errors from './pages/guides/Errors.jsx'
+import Webhooks from './pages/guides/Webhooks.jsx'
 // Pages (resources)
 import Contacts from './pages/resources/Contacts.jsx'
 import Conversations from './pages/resources/Conversations.jsx'
@@ -26,6 +26,8 @@ export default function App() {
                 <PreviewToolbar />
                 <div className="mx-5 rounded-2xl border border-white/10">
                     <Topbar />
+                    {/* Spacer to offset the fixed Topbar height so content isn't hidden underneath */}
+                    <div aria-hidden className="h-14 md:h-16"></div>
                     <div className="mx-auto flex">
                         <Sidebar />
                         {/* Routed page content */}

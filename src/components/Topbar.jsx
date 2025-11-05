@@ -1,9 +1,12 @@
+import { Link } from 'react-router-dom'
 import Brand from './Brand.jsx'
 
 export default function Topbar() {
     return (
-        <header className="rounded-2xl sticky top-0 z-10 border-b border-white/5 bg-zinc-900/80 backdrop-blur supports-backdrop-filter:bg-zinc-900/60">
-            <div className="mx-auto px-5 py-3">
+        <>
+            {/* Fixed top navigation bar (sits below the PreviewToolbar) */}
+            <header className="fixed inset-x-5 top-16 z-30 rounded-2xl border-b border-white/5 bg-zinc-900/80 backdrop-blur supports-backdrop-filter:bg-zinc-900/60">
+                <div className="mx-auto px-5 py-3">
                 {/* 4 columns: brand | search (flex-1) | links | actions */}
                 <div className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-4">
                     {/* Brand at far left */}
@@ -29,9 +32,9 @@ export default function Topbar() {
 
                     {/* Top-level nav links */}
                     <nav className="hidden items-center gap-4 sm:flex">
-                        <a className="text-sm font-medium text-zinc-200 hover:text-white" href="#">API</a>
-                        <a className="text-sm font-medium text-zinc-200 hover:text-white" href="#">Documentation</a>
-                        <a className="text-sm font-medium text-zinc-200 hover:text-white" href="#">Support</a>
+                        <Link className="text-sm font-medium text-zinc-200 hover:text-white" to="/">API</Link>
+                        <Link className="text-sm font-medium text-zinc-200 hover:text-white" to="#">Documentation</Link>
+                        <Link className="text-sm font-medium text-zinc-200 hover:text-white" to="#">Support</Link>
                     </nav>
 
                     {/* Right-side actions */}
@@ -40,7 +43,8 @@ export default function Topbar() {
                         <button className="rounded-md border border-[#162B27] px-3 py-1.5 text-sm text-[#00BC7D] hover:cursor-pointer hover:border-[#00BC7D]">Sign in</button>
                     </div>
                 </div>
-            </div>
-        </header>
+                </div>
+            </header>
+        </>
     )
 }
