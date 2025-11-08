@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Topbar from './components/Topbar.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import PreviewToolbar from './components/PreviewToolbar.jsx'
@@ -35,7 +35,6 @@ export default function App() {
                         <Sidebar />
                         {/* Routed page content with a Back to top button and pager */}
                         <main className="flex-1 relative">
-                            <BackToTop />
                             <Routes>
                                 {/* Default to Introduction */}
                                 <Route path="/" element={<Navigate to="/introduction" replace />} />
@@ -63,40 +62,6 @@ export default function App() {
                 </div>
                     </div>
                 </BrowserRouter>
-    )
-}
-
-function BackToTop() {
-    const [visible, setVisible] = useState(false)
-
-    useEffect(() => {
-        const handler = () => {
-            setVisible(window.scrollY > 400)
-        }
-        window.addEventListener('scroll', handler, { passive: true })
-        handler()
-        return () => window.removeEventListener('scroll', handler)
-    }, [])
-
-    const onClick = () => {
-        // Scroll to top considering header offset for consistency (target top minus offset -> 0)
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-
-    return (
-        <button
-            onClick={onClick}
-            aria-label="Back to top"
-            className={
-                'pointer-events-auto fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-800/70 px-4 py-2 text-sm font-medium text-zinc-200 backdrop-blur transition-opacity hover:bg-zinc-700/70 ' +
-                (visible ? 'opacity-100' : 'opacity-0')
-            }
-        >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
-                <path d="M12 5a1 1 0 0 0-.7.3l-6 6a1 1 0 0 0 1.4 1.4L11 8.41V18a1 1 0 0 0 2 0V8.41l4.3 4.29a1 1 0 0 0 1.4-1.4l-6-6A1 1 0 0 0 12 5Z" />
-            </svg>
-            Top
-        </button>
     )
 }
 
