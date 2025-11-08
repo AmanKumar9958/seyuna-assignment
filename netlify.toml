@@ -1,0 +1,19 @@
+[build]
+    publish = "dist"         # folder to publish (adjust to your build output)
+    command = "npm run build" # build command
+
+# Redirect all routes to index.html for single-page apps
+[[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200
+    force = true
+
+# Security and caching headers example
+[[headers]]
+    for = "/*"
+    [headers.values]
+        X-Frame-Options = "DENY"
+        X-Content-Type-Options = "nosniff"
+        Referrer-Policy = "no-referrer-when-downgrade"
+        Cache-Control = "public, max-age=0, must-revalidate"

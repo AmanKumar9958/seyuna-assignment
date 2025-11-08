@@ -1,4 +1,8 @@
+import useSectionObserver from '../../hooks/useSectionObserver.js'
+
 export default function Quickstart() {
+  // Observe Quickstart anchor sections for active highlighting while scrolling
+  useSectionObserver(['choose-your-client', 'making-your-first-api-request', 'whats-next'])
   return (
     <div className="px-6 py-8 sm:py-12">
       {/* Title + intro */}
@@ -25,7 +29,7 @@ export default function Quickstart() {
       </div>
 
       {/* Choose your client */}
-      <section id="choose-your-client" className="mt-10 scroll-mt-24">
+  <section id="choose-your-client" className="mt-10 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Choose your client</h2>
         <p className="mt-2 max-w-4xl text-zinc-300">
           Before making your first API request, you need to pick which API client you will use. In addition to
@@ -67,7 +71,7 @@ curl --version`}
       </section>
 
       {/* Making your first API request */}
-      <section id="making-your-first-api-request" className="mt-12 scroll-mt-24">
+  <section id="making-your-first-api-request" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Making your first API request</h2>
         <p className="mt-2 max-w-4xl text-zinc-300">
           After picking your preferred client, you are ready to make your first call to the Protocol API. Below, you
@@ -114,7 +118,7 @@ curl --version`}
         </a>
       </section>
       {/* What's next */}
-      <section id="whats-next" className="mt-12 scroll-mt-24">
+  <section id="whats-next" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">What's next?</h2>
         <p className="mt-2 max-w-4xl text-zinc-300">
           Great, you're now set up with an API client and have made your first request to the API. Here are a few

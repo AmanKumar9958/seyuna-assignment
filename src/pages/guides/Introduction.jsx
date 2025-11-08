@@ -1,36 +1,8 @@
-import { useEffect } from 'react'
+import useSectionObserver from '../../hooks/useSectionObserver.js'
 
 export default function Introduction() {
-  useEffect(() => {
-    const ids = ['guides', 'resources']
-    const sections = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean)
-
-    // Observe sections to update the URL hash and sidebar highlighting
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the most visible section
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-        if (visible) {
-          const id = visible.target.id
-          // Notify listeners (Sidebar) that section changed without touching the URL
-          window.dispatchEvent(new CustomEvent('sectionchange', { detail: id }))
-        }
-      },
-      {
-        // Trigger when section is within middle of the viewport
-        root: null,
-        rootMargin: '-40% 0px -50% 0px',
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-      }
-    )
-
-    sections.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+  // Observe anchor sections so sidebar highlights update while scrolling
+  useSectionObserver(['guides', 'resources'])
 
   return (
     <div className="px-6 py-8 sm:py-12">
@@ -83,7 +55,7 @@ export default function Introduction() {
       </section>
 
       {/* Resources section (anchor) */}
-      <section id="resources" className="mt-12 scroll-mt-24">
+  <section id="resources" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
         <div className="mt-4 grid gap-6 lg:grid-cols-4">
           <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>
@@ -92,7 +64,7 @@ export default function Introduction() {
           <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
         </div>
       </section>
-      <section id="resources" className="mt-12 scroll-mt-24">
+  <section id="resources" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
         <div className="mt-4 grid gap-6 lg:grid-cols-4">
           <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>
@@ -101,7 +73,7 @@ export default function Introduction() {
           <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
         </div>
       </section>
-      <section id="resources" className="mt-12 scroll-mt-24">
+  <section id="resources" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
         <div className="mt-4 grid gap-6 lg:grid-cols-4">
           <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>
@@ -110,7 +82,7 @@ export default function Introduction() {
           <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
         </div>
       </section>
-      <section id="resources" className="mt-12 scroll-mt-24">
+  <section id="resources" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
         <div className="mt-4 grid gap-6 lg:grid-cols-4">
           <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>

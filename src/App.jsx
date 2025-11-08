@@ -46,11 +46,11 @@ export default function App() {
                                 <Route path="/webhooks" element={<Webhooks />} />
 
                                 {/* Resources */}
-                                <Route path="/resources/contacts" element={<Contacts />} />
-                                <Route path="/resources/conversations" element={<Conversations />} />
-                                <Route path="/resources/messages" element={<Messages />} />
-                                <Route path="/resources/groups" element={<Groups />} />
-                                <Route path="/resources/attachments" element={<Attachments />} />
+                                <Route path="/contacts" element={<Contacts />} />
+                                <Route path="/conversations" element={<Conversations />} />
+                                <Route path="/messages" element={<Messages />} />
+                                <Route path="/groups" element={<Groups />} />
+                                <Route path="/attachments" element={<Attachments />} />
                             </Routes>
                         </main>
                     </div>

@@ -20,12 +20,17 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
         }
     }, [anchorParent, location.pathname, subMap, anchorMap])
 
-        // Listen for section changes broadcast by the Introduction page
+        // Listen for section changes broadcast by pages with anchors (Introduction, Quickstart, etc.)
         useEffect(() => {
             const handler = (e) => setActiveAnchor(e.detail)
             window.addEventListener('sectionchange', handler)
             return () => window.removeEventListener('sectionchange', handler)
         }, [])
+
+        // Reset active anchor when route changes (prevents stale highlight when navigating)
+        useEffect(() => {
+            setActiveAnchor(null)
+        }, [location.pathname])
 
         const handleClick = (item) => {
             const hasChildren = subMap[item]?.length
@@ -126,6 +131,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     .replace(/['’`]/g, '')
                                                     .replace(/[^a-z0-9\s-]/g, '')
                                                     .replace(/\s+/g, '-')
+                                                const isActiveAnchor = location.pathname === parentPath && activeAnchor === childAnchor
                                                 const onClick = (e) => {
                                                     e.preventDefault()
                                                     if (location.pathname !== parentPath) navigate(parentPath)
@@ -134,13 +140,19 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                         const el = document.getElementById(childAnchor)
                                                         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
                                                     })
+                                                    setActiveAnchor(childAnchor)
                                                 }
                                                 return (
                                                     <a
                                                         key={child}
                                                         href="#"
                                                         onClick={onClick}
-                                                        className="block rounded-md px-3 py-2 text-sm text-zinc-300 hover:bg-white/10 hover:text-zinc-100 transition-colors"
+                                                        className={
+                                                            `block rounded-md px-3 py-2 text-sm transition-colors ` +
+                                                            (isActiveAnchor
+                                                                ? 'bg-white/10 text-zinc-100'
+                                                                : 'text-zinc-300 hover:bg-white/10 hover:text-zinc-100')
+                                                        }
                                                     >
                                                         {child}
                                                     </a>
