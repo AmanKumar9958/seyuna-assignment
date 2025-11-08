@@ -6,7 +6,7 @@ import { smoothScrollToId } from '../utils/scroll.js'
 // NavGroup renders a vertical list of items.
 // If an item has children (provided via subMap), clicking it will expand
 // the children and collapse any other expanded item (accordion behavior).
-export default function NavGroup({ title, items, subMap = {}, prefix = '', anchorParent, anchorMap }) {
+export default function NavGroup({ title, items, subMap = {}, prefix = '', anchorParent, anchorMap, onNavigate }) {
     const [openItem, setOpenItem] = useState(null)
         const navigate = useNavigate()
         const location = useLocation()
@@ -40,13 +40,19 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                 const isAnchorOwner = anchorParent && subMap[item].some((c) => anchorMap?.[c])
                 if (isAnchorOwner) {
                     // E.g., "Introduction" anchors live on /introduction
-                    if (location.pathname !== anchorParent) navigate(anchorParent)
+                    if (location.pathname !== anchorParent) {
+                        navigate(anchorParent)
+                        onNavigate && onNavigate()
+                    }
                 } else {
                     // For parents with children that are not anchor owners (e.g., Quickstart),
                     // also navigate to their own route so the right panel updates.
                     const slug = item.toLowerCase().replace(/\s+/g, '-')
                     const path = prefix ? `/${prefix}/${slug}` : `/${slug}`
-                    if (location.pathname !== path) navigate(path)
+                    if (location.pathname !== path) {
+                        navigate(path)
+                        onNavigate && onNavigate()
+                    }
                 }
             } else {
                 // Clicking an item without children collapses any open submenu
@@ -55,6 +61,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                 const slug = item.toLowerCase().replace(/\s+/g, '-')
                 const path = prefix ? `/${prefix}/${slug}` : `/${slug}`
                 navigate(path)
+                onNavigate && onNavigate()
             }
         }
 
@@ -106,6 +113,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     // Ensure scroll runs after route render
                                                     requestAnimationFrame(doScroll)
                                                     setActiveAnchor(anchorId)
+                                                    onNavigate && onNavigate()
                                                 }
                                                 return (
                                                     <a
@@ -140,6 +148,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     // Delay to allow navigation render before scrolling
                                                     requestAnimationFrame(() => smoothScrollToId(childAnchor))
                                                     setActiveAnchor(childAnchor)
+                                                    onNavigate && onNavigate()
                                                 }
                                                 return (
                                                     <a
@@ -165,6 +174,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                 <NavLink
                                                     key={child}
                                                     to={childPath}
+                                                    onClick={() => onNavigate && onNavigate()}
                                                     className={({ isActive }) =>
                                                         `block rounded-md px-3 py-2 text-sm transition-colors ${
                                                             isActive

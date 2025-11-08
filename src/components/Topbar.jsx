@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Brand from './Brand.jsx'
 
-export default function Topbar() {
+export default function Topbar({ onMenuClick }) {
     return (
         <>
             {/* Fixed top navigation bar (sits below the PreviewToolbar) */}
@@ -9,8 +9,21 @@ export default function Topbar() {
                 <div className="mx-auto px-5 py-3">
                 {/* 4 columns: brand | search (flex-1) | links | actions */}
                 <div className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-4">
-                    {/* Brand at far left */}
-                    <Brand />
+                    {/* Brand + hamburger at far left */}
+                    <div className="flex items-center gap-3">
+                        {/* Hamburger (mobile only) */}
+                        <button
+                            type="button"
+                            aria-label="Open menu"
+                            onClick={onMenuClick}
+                            className="inline-flex items-center justify-center rounded-md border border-white/10 p-2 text-zinc-300 hover:bg-white/5 lg:hidden"
+                        >
+                            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+                                <path d="M4 7a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1Zm0 5a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1Zm1 4a1 1 0 0 0 0 2h14a1 1 0 1 0 0-2H5Z" />
+                            </svg>
+                        </button>
+                        <Brand />
+                    </div>
 
                     {/* Search bar (grows to take available space) */}
                     <div className="relative hidden md:block">

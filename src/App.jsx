@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Topbar from './components/Topbar.jsx'
 import Sidebar from './components/Sidebar.jsx'
+import NavGroup from './components/NavGroup.jsx'
 import PreviewToolbar from './components/PreviewToolbar.jsx'
 
 // Pages (guides)
@@ -21,6 +22,19 @@ import Groups from './pages/resources/Groups.jsx'
 import Attachments from './pages/resources/Attachments.jsx'
 
 export default function App() {
+        // Two-phase state to allow enter/exit animations
+        const [menuMounted, setMenuMounted] = useState(false)
+        const [menuVisible, setMenuVisible] = useState(false)
+        const openMenu = () => {
+            setMenuMounted(true)
+            // next tick to ensure mount before starting animation
+            requestAnimationFrame(() => setMenuVisible(true))
+        }
+        const closeMenu = () => {
+            setMenuVisible(false)
+            // Unmount after animation finishes (duration 200ms)
+            setTimeout(() => setMenuMounted(false), 220)
+        }
         return (
             // BrowserRouter updates the visible URL (e.g., /introduction, /quickstart)
             <BrowserRouter>
@@ -28,7 +42,7 @@ export default function App() {
             <div className="min-h-dvh bg-[#1D202A] text-zinc-200">
                 <PreviewToolbar />
                 <div className="mx-5 rounded-2xl border border-white/10">
-                    <Topbar />
+                    <Topbar onMenuClick={openMenu} />
                     {/* Spacer to offset the fixed Topbar height so content isn't hidden underneath */}
                     <div aria-hidden className="h-14 md:h-16"></div>
                     <div className="mx-auto flex">
@@ -59,6 +73,44 @@ export default function App() {
                             <DocPager />
                         </main>
                                         </div>
+                    {/* Mobile menu overlay */}
+                    {menuMounted && (
+                        <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true">
+                            {/* Backdrop fades in/out */}
+                            <div
+                                className={
+                                    `absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-200 ${
+                                        menuVisible ? 'opacity-100' : 'opacity-0'
+                                    }`
+                                }
+                                onClick={closeMenu}
+                            ></div>
+                            {/* Sliding panel */}
+                            <div
+                                className={
+                                    `absolute inset-y-0 left-0 w-80 max-w-[80%] overflow-y-auto border-r border-white/10 bg-[#18181B] p-5 shadow-xl transform transition-transform duration-200 ${
+                                        menuVisible ? 'translate-x-0' : '-translate-x-full'
+                                    }`
+                                }
+                            >
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm font-semibold text-zinc-100">Protocol</span>
+                                    <button
+                                        onClick={closeMenu}
+                                        aria-label="Close menu"
+                                        className="rounded-md p-2 text-zinc-400 hover:bg-white/5 hover:text-zinc-200"
+                                    >
+                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+                                            <path d="M6.34 4.93a1 1 0 0 0-1.41 1.41L10.59 12l-5.66 5.66a1 1 0 1 0 1.41 1.41L12 13.41l5.66 5.66a1 1 0 0 0 1.41-1.41L13.41 12l5.66-5.66a1 1 0 0 0-1.41-1.41L12 10.59 6.34 4.93Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div className="mt-6 space-y-8">
+                                    <MobileNav closeMenu={closeMenu} />
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
                     </div>
                 </BrowserRouter>
@@ -112,4 +164,31 @@ function TitleManager() {
     }, [finalTitle])
 
     return null
+}
+
+function MobileNav({ closeMenu }) {
+    return (
+        <>
+            <NavGroup
+                title="Guides"
+                items={['Introduction', 'Quickstart', 'SDKs', 'Authentication', 'Pagination', 'Errors', 'Webhooks']}
+                subMap={{ Introduction: ['Guides', 'Resources'], Quickstart: ['Choose your client', 'Making your first API request', 'What’s next?'], SDKs: ['Official libraries'] }}
+                anchorParent="/introduction"
+                anchorMap={{ Guides: 'guides', Resources: 'resources' }}
+                onNavigate={closeMenu}
+            />
+            <NavGroup
+                title="Resources"
+                items={['Contacts', 'Conversations', 'Messages', 'Groups', 'Attachments']}
+                prefix="resources"
+                onNavigate={closeMenu}
+            />
+            <button
+                onClick={closeMenu}
+                className="mt-4 w-full rounded-md border border-white/10 px-3 py-2 text-sm text-zinc-300 hover:bg-white/5"
+            >
+                Close menu
+            </button>
+        </>
+    )
 }
