@@ -1,4 +1,4 @@
-import { MemoryRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Topbar from './components/Topbar.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import PreviewToolbar from './components/PreviewToolbar.jsx'
@@ -20,8 +20,8 @@ import Attachments from './pages/resources/Attachments.jsx'
 
 export default function App() {
         return (
-            // MemoryRouter keeps navigation in memory without updating the browser URL path
-            <MemoryRouter initialEntries={["/introduction"]}>
+            // BrowserRouter updates the visible URL (e.g., /introduction, /quickstart)
+            <BrowserRouter>
             <div className="min-h-dvh bg-[#1D202A] text-zinc-200">
                 <PreviewToolbar />
                 <div className="mx-5 rounded-2xl border border-white/10">
@@ -56,6 +56,6 @@ export default function App() {
                     </div>
                 </div>
                     </div>
-                </MemoryRouter>
+                </BrowserRouter>
     )
 }

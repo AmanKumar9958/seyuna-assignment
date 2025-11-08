@@ -28,21 +28,29 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
         }, [])
 
         const handleClick = (item) => {
-            if (subMap[item]?.length) {
+            const hasChildren = subMap[item]?.length
+            if (hasChildren) {
                 setOpenItem((curr) => (curr === item ? null : item))
-                // If this item owns anchors (e.g., Introduction), also ensure we are on its parent route
-                if (anchorParent && subMap[item].some((c) => anchorMap?.[c])) {
+                const isAnchorOwner = anchorParent && subMap[item].some((c) => anchorMap?.[c])
+                if (isAnchorOwner) {
+                    // E.g., "Introduction" anchors live on /introduction
                     if (location.pathname !== anchorParent) navigate(anchorParent)
+                } else {
+                    // For parents with children that are not anchor owners (e.g., Quickstart),
+                    // also navigate to their own route so the right panel updates.
+                    const slug = item.toLowerCase().replace(/\s+/g, '-')
+                    const path = prefix ? `/${prefix}/${slug}` : `/${slug}`
+                    if (location.pathname !== path) navigate(path)
                 }
-        } else {
-            // Clicking an item without children collapses any open submenu
-            setOpenItem(null)
-            // Navigate to the item's route
-            const slug = item.toLowerCase().replace(/\s+/g, '-')
-            const path = prefix ? `/${prefix}/${slug}` : `/${slug}`
-            navigate(path)
+            } else {
+                // Clicking an item without children collapses any open submenu
+                setOpenItem(null)
+                // Navigate to the item's route
+                const slug = item.toLowerCase().replace(/\s+/g, '-')
+                const path = prefix ? `/${prefix}/${slug}` : `/${slug}`
+                navigate(path)
+            }
         }
-    }
 
     return (
             <SectionTitle title={title}>
@@ -78,54 +86,82 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                 </button>
 
                                 {/* Children list */}
-                                                {hasChildren && expanded && (
+                                {hasChildren && expanded && (
                                     <div className="ml-3 border-l border-white/10 pl-3">
-                                                        {subMap[item].map((child) => {
-                                                            const anchorId = anchorMap?.[child]
-                                                                                    if (anchorParent && anchorId) {
-                                                                                        const isActiveAnchor = location.pathname === anchorParent && activeAnchor === anchorId
-                                                                                        const onClick = (e) => {
-                                                                                            e.preventDefault()
-                                                                                            // Ensure we are on the introduction route (without changing URL visibly)
-                                                                                            if (location.pathname !== anchorParent) navigate(anchorParent)
-                                                                                            // Smooth scroll to the section id
-                                                                                            const el = document.getElementById(anchorId)
-                                                                                            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                                                                                            // Locally mark active anchor (no hash updates)
-                                                                                            setActiveAnchor(anchorId)
-                                                                                        }
-                                                                return (
-                                                                    <a
-                                                                        key={child}
-                                                                                                href="#"
-                                                                        onClick={onClick}
-                                                                        className={
-                                                                            `block rounded-md px-3 py-2 text-sm hover:bg-white/5 ` +
-                                                                            (isActiveAnchor ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200')
-                                                                        }
-                                                                    >
-                                                                        {child}
-                                                                    </a>
-                                                                )
-                                                            }
+                                        {subMap[item].map((child) => {
+                                            // Case 1: Anchors owned by a specific parent page (e.g., Introduction)
+                                            const anchorId = anchorMap?.[child]
+                                            if (anchorParent && anchorId) {
+                                                const isActiveAnchor = location.pathname === anchorParent && activeAnchor === anchorId
+                                                const onClick = (e) => {
+                                                    e.preventDefault()
+                                                    if (location.pathname !== anchorParent) navigate(anchorParent)
+                                                    const el = document.getElementById(anchorId)
+                                                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                                                    setActiveAnchor(anchorId)
+                                                }
+                                                return (
+                                                    <a
+                                                        key={child}
+                                                        href="#"
+                                                        onClick={onClick}
+                                                        className={
+                                                            `block rounded-md px-3 py-2 text-sm hover:bg-white/5 ` +
+                                                            (isActiveAnchor ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200')
+                                                        }
+                                                    >
+                                                        {child}
+                                                    </a>
+                                                )
+                                            }
 
-                                                            // Default: navigate to a separate route
-                                                            const childSlug = child.toLowerCase().replace(/\s+/g, '-')
-                                                            const childPath = prefix ? `/${prefix}/${childSlug}` : `/${childSlug}`
-                                                            return (
-                                                                <NavLink
-                                                                    key={child}
-                                                                    to={childPath}
-                                                                    className={({ isActive }) =>
-                                                                        `block rounded-md px-3 py-2 text-sm hover:bg-white/5 ${
-                                                                            isActive ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'
-                                                                        }`
-                                                                    }
-                                                                >
-                                                                    {child}
-                                                                </NavLink>
-                                                            )
-                                                        })}
+                                            // Case 2: Children as in-page anchors of their parent page (e.g., Quickstart subsections)
+                                            if (!prefix) {
+                                                const parentSlug = item.toLowerCase().replace(/\s+/g, '-')
+                                                const parentPath = `/${parentSlug}`
+                                                const childAnchor = child
+                                                    .toLowerCase()
+                                                    .replace(/['’`]/g, '')
+                                                    .replace(/[^a-z0-9\s-]/g, '')
+                                                    .replace(/\s+/g, '-')
+                                                const onClick = (e) => {
+                                                    e.preventDefault()
+                                                    if (location.pathname !== parentPath) navigate(parentPath)
+                                                    // Delay to allow navigation render before scrolling
+                                                    requestAnimationFrame(() => {
+                                                        const el = document.getElementById(childAnchor)
+                                                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                                                    })
+                                                }
+                                                return (
+                                                    <a
+                                                        key={child}
+                                                        href="#"
+                                                        onClick={onClick}
+                                                        className="block rounded-md px-3 py-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-zinc-200"
+                                                    >
+                                                        {child}
+                                                    </a>
+                                                )
+                                            }
+
+                                            // Case 3: Fallback to route navigation (for resources children with prefix)
+                                            const childSlug = child.toLowerCase().replace(/\s+/g, '-')
+                                            const childPath = prefix ? `/${prefix}/${childSlug}` : `/${childSlug}`
+                                            return (
+                                                <NavLink
+                                                    key={child}
+                                                    to={childPath}
+                                                    className={({ isActive }) =>
+                                                        `block rounded-md px-3 py-2 text-sm hover:bg-white/5 ${
+                                                            isActive ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'
+                                                        }`
+                                                    }
+                                                >
+                                                    {child}
+                                                </NavLink>
+                                            )
+                                        })}
                                     </div>
                                 )}
                             </div>
