@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import Topbar from './components/Topbar.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import PreviewToolbar from './components/PreviewToolbar.jsx'
@@ -22,6 +23,7 @@ export default function App() {
         return (
             // BrowserRouter updates the visible URL (e.g., /introduction, /quickstart)
             <BrowserRouter>
+            <TitleManager />
             <div className="min-h-dvh bg-[#1D202A] text-zinc-200">
                 <PreviewToolbar />
                 <div className="mx-5 rounded-2xl border border-white/10">
@@ -47,11 +49,11 @@ export default function App() {
                                 <Route path="/webhooks" element={<Webhooks />} />
 
                                 {/* Resources */}
-                                <Route path="/contacts" element={<Contacts />} />
-                                <Route path="/conversations" element={<Conversations />} />
-                                <Route path="/messages" element={<Messages />} />
-                                <Route path="/groups" element={<Groups />} />
-                                <Route path="/attachments" element={<Attachments />} />
+                                <Route path="/resources/contacts" element={<Contacts />} />
+                                <Route path="/resources/conversations" element={<Conversations />} />
+                                <Route path="/resources/messages" element={<Messages />} />
+                                <Route path="/resources/groups" element={<Groups />} />
+                                <Route path="/resources/attachments" element={<Attachments />} />
                             </Routes>
                         </main>
                                         </div>
@@ -60,8 +62,6 @@ export default function App() {
                 </BrowserRouter>
     )
 }
-
-import { useState, useEffect } from 'react'
 
 function BackToTop() {
     const [visible, setVisible] = useState(false)
@@ -95,4 +95,53 @@ function BackToTop() {
             Top
         </button>
     )
+}
+
+// Updates the document.title based on the active route
+function TitleManager() {
+    const location = useLocation()
+
+    // Map known routes to human-readable titles
+    const titles = {
+        '/introduction': 'Introduction',
+        '/quickstart': 'Quickstart',
+        '/sdks': 'SDKs',
+        '/authentication': 'Authentication',
+        '/pagination': 'Pagination',
+        '/errors': 'Errors',
+        '/webhooks': 'Webhooks',
+        '/resources/contacts': 'Contacts',
+        '/resources/conversations': 'Conversations',
+        '/resources/messages': 'Messages',
+        '/resources/groups': 'Groups',
+        '/resources/attachments': 'Attachments',
+    }
+
+    const base = 'Seyuna Assignment'
+    const path = (location.pathname || '').toLowerCase()
+    const explicit = titles[path]
+
+    // Fallback: title-case the last segment of the path
+    const fallback = path
+        .split('/')
+        .filter(Boolean)
+        .pop()
+    const titleCased = fallback
+        ? fallback
+                .replace(/[-_]+/g, ' ')
+                .replace(/\b\w/g, (c) => c.toUpperCase())
+        : ''
+
+    const finalTitle = explicit || titleCased || base
+
+        // Update title on route change
+        useEffect(() => {
+        if (finalTitle === base) {
+            document.title = base
+        } else {
+            document.title = `${finalTitle} - ${base}`
+        }
+    }, [finalTitle])
+
+    return null
 }
