@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import SectionTitle from './SectionTitle.jsx'
+import { smoothScrollToId } from '../utils/scroll.js'
 
 // NavGroup renders a vertical list of items.
 // If an item has children (provided via subMap), clicking it will expand
@@ -101,8 +102,9 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                 const onClick = (e) => {
                                                     e.preventDefault()
                                                     if (location.pathname !== anchorParent) navigate(anchorParent)
-                                                    const el = document.getElementById(anchorId)
-                                                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                                                    const doScroll = () => smoothScrollToId(anchorId)
+                                                    // Ensure scroll runs after route render
+                                                    requestAnimationFrame(doScroll)
                                                     setActiveAnchor(anchorId)
                                                 }
                                                 return (
@@ -136,10 +138,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     e.preventDefault()
                                                     if (location.pathname !== parentPath) navigate(parentPath)
                                                     // Delay to allow navigation render before scrolling
-                                                    requestAnimationFrame(() => {
-                                                        const el = document.getElementById(childAnchor)
-                                                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                                                    })
+                                                    requestAnimationFrame(() => smoothScrollToId(childAnchor))
                                                     setActiveAnchor(childAnchor)
                                                 }
                                                 return (

@@ -4,7 +4,7 @@ import { CiMobile1, CiDesktop, CiLaptop } from 'react-icons/ci'
 // Contains: title + breadcrumbs (left), device preview buttons (center), CTA button (right)
 export default function PreviewToolbar() {
     return (
-        <div className="sticky top-0 z-20 border-b border-white/5 bg-[#1D202A]">
+        <div data-preview-toolbar className="sticky top-0 z-20 border-b border-white/5 bg-[#1D202A]">
             <div className="mx-auto flex items-center justify-between px-5 py-5">
                 {/* Title */}
                 <div className="min-w-0">

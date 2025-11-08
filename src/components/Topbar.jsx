@@ -5,7 +5,7 @@ export default function Topbar() {
     return (
         <>
             {/* Fixed top navigation bar (sits below the PreviewToolbar) */}
-            <header className="fixed inset-x-5 top-16 z-30 rounded-2xl border-b border-white/5 bg-zinc-900/80 backdrop-blur supports-backdrop-filter:bg-zinc-900/60">
+            <header data-topbar className="fixed inset-x-5 top-16 z-30 rounded-2xl border-b border-white/5 bg-zinc-900/80 backdrop-blur supports-backdrop-filter:bg-zinc-900/60">
                 <div className="mx-auto px-5 py-3">
                 {/* 4 columns: brand | search (flex-1) | links | actions */}
                 <div className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-4">

@@ -7,7 +7,7 @@
     from = "/*"
     to = "/index.html"
     status = 200
-    force = true
+    # force removed to allow static assets (css/js) to be served correctly in SPA routes
 
 # Security and caching headers example
 [[headers]]
