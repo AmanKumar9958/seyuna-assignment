@@ -12,6 +12,7 @@ import Authentication from './pages/guides/Authentication.jsx'
 import Pagination from './pages/guides/Pagination.jsx'
 import Errors from './pages/guides/Errors.jsx'
 import Webhooks from './pages/guides/Webhooks.jsx'
+import DocPager from './components/DocPager.jsx'
 // Pages (resources)
 import Contacts from './pages/resources/Contacts.jsx'
 import Conversations from './pages/resources/Conversations.jsx'
@@ -32,7 +33,7 @@ export default function App() {
                     <div aria-hidden className="h-14 md:h-16"></div>
                     <div className="mx-auto flex">
                         <Sidebar />
-                        {/* Routed page content with a Back to top button */}
+                        {/* Routed page content with a Back to top button and pager */}
                         <main className="flex-1 relative">
                             <BackToTop />
                             <Routes>
@@ -55,6 +56,8 @@ export default function App() {
                                 <Route path="/resources/groups" element={<Groups />} />
                                 <Route path="/resources/attachments" element={<Attachments />} />
                             </Routes>
+                            {/* Pager shown beneath content */}
+                            <DocPager />
                         </main>
                                         </div>
                 </div>
