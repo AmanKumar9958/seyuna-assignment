@@ -54,7 +54,7 @@ export default function Quickstart() {
             ))}
           </div>
           {/* Body */}
-          <div className="px-4 py-5">
+          <div className="px-4 py-5 overflow-x-auto">
             <pre className="font-mono text-sm leading-6 text-zinc-300">
 {`# cURL is most likely already installed on your machine
 curl --version`}
@@ -101,7 +101,7 @@ curl --version`}
             <span>/v1/conversations</span>
           </div>
           {/* Body */}
-          <div className="px-4 py-5">
+          <div className="px-4 py-5 overflow-x-auto">
             <pre className="font-mono text-sm leading-6 text-zinc-300">
 {`curl -G https://api.protocol.chat/v1/conversations \
   -H "Authorization: Bearer {token}" \
