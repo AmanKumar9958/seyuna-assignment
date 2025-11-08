@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import useSectionObserver from '../../hooks/useSectionObserver.js'
 
 export default function Quickstart() {
@@ -37,30 +38,7 @@ export default function Quickstart() {
           example, you can see how to install each client.
         </p>
 
-        {/* Code block with tabs (static UI, cURL active) */}
-        <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/30">
-          {/* Tabs */}
-          <div className="flex items-center gap-6 border-b border-white/5 px-4 py-3 text-sm">
-            {['cURL', 'JavaScript', 'Python', 'PHP'].map((t, idx) => (
-              <span
-                key={t}
-                className={
-                  'cursor-default pb-2 text-zinc-400 ' +
-                  (idx === 0 ? 'text-emerald-400 relative after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:bg-emerald-400' : 'hover:text-zinc-300')
-                }
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-          {/* Body */}
-          <div className="px-4 py-5 overflow-x-auto">
-            <pre className="font-mono text-sm leading-6 text-zinc-300">
-{`# cURL is most likely already installed on your machine
-curl --version`}
-            </pre>
-          </div>
-        </div>
+        <LanguageInstallTabs />
 
         <a href="#" className="mt-6 inline-flex items-center gap-2 text-emerald-400">
           Check out our list of first-party SDKs
@@ -79,36 +57,7 @@ curl --version`}
           the cURL example, results are limited to ten conversations, the default page length for each client.
         </p>
 
-        <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/30">
-          {/* Tabs */}
-          <div className="flex items-center gap-6 border-b border-white/5 px-4 py-3 text-sm">
-            {['cURL', 'JavaScript', 'Python', 'PHP'].map((t, idx) => (
-              <span
-                key={t}
-                className={
-                  'cursor-default pb-2 text-zinc-400 ' +
-                  (idx === 0 ? 'text-emerald-400 relative after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:bg-emerald-400' : 'hover:text-zinc-300')
-                }
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-          {/* Endpoint header */}
-          <div className="border-b border-white/5 bg-zinc-900/60 px-4 py-2 font-mono text-sm text-zinc-300">
-            <span className="text-emerald-400">GET</span>
-            <span className="mx-2 text-zinc-500">·</span>
-            <span>/v1/conversations</span>
-          </div>
-          {/* Body */}
-          <div className="px-4 py-5 overflow-x-auto">
-            <pre className="font-mono text-sm leading-6 text-zinc-300">
-{`curl -G https://api.protocol.chat/v1/conversations \
-  -H "Authorization: Bearer {token}" \
-  -d limit=10`}
-            </pre>
-          </div>
-        </div>
+        <LanguageRequestTabs />
 
         <a href="#" className="mt-4 inline-flex items-center gap-2 text-emerald-400">
           Read the docs for the Conversations endpoint
@@ -130,6 +79,80 @@ curl --version`}
           <li className="list-disc"><a href="#" className="hover:underline">Learn about the different error messages in Protocol</a></li>
         </ul>
       </section>
+    </div>
+  )
+}
+
+// Shared language list
+const LANGS = ['cURL', 'JavaScript', 'Python', 'PHP']
+
+function Tabs({ value, onChange }) {
+  return (
+    <div role="tablist" aria-label="Language selector" className="flex items-center gap-6 border-b border-white/5 px-4 py-3 text-sm">
+      {LANGS.map(lang => {
+        const active = value === lang
+        return (
+          <button
+            key={lang}
+            role="tab"
+            aria-selected={active}
+            className={
+              'relative pb-2 transition-colors focus:outline-none ' +
+              (active
+                ? 'text-emerald-400 after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:bg-emerald-400'
+                : 'text-zinc-400 hover:text-zinc-300')
+            }
+            onClick={() => onChange(lang)}
+          >
+            {lang}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+function LanguageInstallTabs() {
+  const [active, setActive] = useState('cURL')
+  const snippets = {
+    cURL: `# cURL is most likely already installed on your machine\ncurl --version`,
+    JavaScript: `# Install the JavaScript SDK\nnpm install protocol-sdk\n# or\nyarn add protocol-sdk\n# or\npnpm add protocol-sdk`,
+    Python: `# Install the Python SDK\npip install protocol_sdk`,
+    PHP: `# Install the PHP SDK using Composer\ncomposer require protocol/sdk`
+  }
+  return (
+    <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/30">
+      <Tabs value={active} onChange={setActive} />
+      <div className="px-4 py-5 overflow-x-auto">
+        <pre className="font-mono text-sm leading-6 text-zinc-300" aria-label={`${active} install instructions`}>
+{snippets[active]}
+        </pre>
+      </div>
+    </div>
+  )
+}
+
+function LanguageRequestTabs() {
+  const [active, setActive] = useState('cURL')
+  const snippets = {
+    cURL: `curl -G https://api.protocol.chat/v1/conversations \\\n+  -H "Authorization: Bearer {token}" \\\n+  -d limit=10`,
+    JavaScript: `import { Protocol } from 'protocol-sdk'\nconst client = new Protocol({ apiKey: process.env.PROTOCOL_API_KEY })\nconst conversations = await client.conversations.list({ limit: 10 })\nconsole.log(conversations)`,
+    Python: `from protocol_sdk import Protocol\nclient = Protocol(api_key="YOUR_API_KEY")\nfor convo in client.conversations.list(limit=10):\n    print(convo)`,
+    PHP: `<?php\nuse Protocol\\Client;\n$client = new Client('YOUR_API_KEY');\n$convos = $client->conversations()->list(['limit' => 10]);\nprint_r($convos);`
+  }
+  return (
+    <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/30">
+      <Tabs value={active} onChange={setActive} />
+      <div className="border-b border-white/5 bg-zinc-900/60 px-4 py-2 font-mono text-sm text-zinc-300">
+        <span className="text-emerald-400">GET</span>
+        <span className="mx-2 text-zinc-500">·</span>
+        <span>/v1/conversations</span>
+      </div>
+      <div className="px-4 py-5 overflow-x-auto">
+        <pre className="font-mono text-sm leading-6 text-zinc-300" aria-label={`${active} conversations list request`}>
+{snippets[active]}
+        </pre>
+      </div>
     </div>
   )
 }
