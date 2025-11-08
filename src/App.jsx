@@ -41,14 +41,13 @@ export default function App() {
       <TitleManager />
       <div className="min-h-dvh bg-[#1D202A] text-zinc-200">
         <PreviewToolbar />
-        {/* --- MODIFICATION: Added max-w-7xl and horizontal padding here --- */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* --- MODIFICATION: Removed mx-5 from this div --- */}
-          <div className="rounded-2xl border border-white/10">
+        {/* Make the main layout full-bleed so the sidebar sits flush left */}
+        <div className="px-0">
+          <div>
             <Topbar onMenuClick={openMenu} />
             {/* Spacer to offset the fixed Topbar height so content isn't hidden underneath */}
             <div aria-hidden className="h-14 md:h-16"></div>
-            <div className="mx-auto flex">
+            <div className="flex">
               <Sidebar />
               {/* Routed page content with a Back to top button and pager */}
               {/* --- MODIFICATION: Added min-w-0 to prevent overflow --- */}
