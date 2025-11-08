@@ -1,12 +1,10 @@
 import useSectionObserver from '../../hooks/useSectionObserver.js'
 
 export default function Introduction() {
-  // Observe anchor sections so sidebar highlights update while scrolling
   useSectionObserver(['guides', 'resources'])
 
   return (
     <div className="px-6 py-8 sm:py-12">
-      {/* Hero */}
       <h1 className="text-3xl font-semibold text-zinc-100">API Documentation</h1>
       <p className="mt-3 max-w-3xl text-zinc-400">
         Use the Protocol API to access contacts, conversations, group messages, and more and seamlessly
@@ -24,7 +22,6 @@ export default function Introduction() {
         </button>
       </div>
 
-      {/* Getting started card */}
       <section className="mt-12 rounded-xl border border-white/10 bg-zinc-900/40 p-6">
         <h2 className="text-lg font-semibold text-zinc-100">Getting started</h2>
         <p className="mt-2 max-w-3xl text-zinc-400">
@@ -43,7 +40,6 @@ export default function Introduction() {
         </a>
       </section>
 
-      {/* Guides section (anchor) */}
       <section id="guides" className="mt-14 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Guides</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -54,8 +50,7 @@ export default function Introduction() {
         </div>
       </section>
 
-      {/* Resources section (anchor) */}
-  <section id="resources" className="mt-12 scroll-mt-24">
+      <section id="resources" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
         <div className="mt-4 grid gap-6 lg:grid-cols-4">
           <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>

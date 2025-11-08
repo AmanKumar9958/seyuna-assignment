@@ -1,13 +1,5 @@
 import { useEffect } from 'react'
 
-/**
- * useSectionObserver
- * Observes a list of section element IDs and dispatches a global `sectionchange` CustomEvent
- * with the id of the section that is most visible in the viewport. This enables sidebar
- * navigation groups to highlight anchors as the user scrolls without modifying the URL hash.
- *
- * @param {string[]} ids - Array of DOM element ids to observe.
- */
 export default function useSectionObserver(ids = []) {
   useEffect(() => {
     if (!ids.length || typeof window === 'undefined') return

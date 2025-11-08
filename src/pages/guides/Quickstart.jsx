@@ -2,11 +2,9 @@ import { useState } from 'react'
 import useSectionObserver from '../../hooks/useSectionObserver.js'
 
 export default function Quickstart() {
-  // Observe Quickstart anchor sections for active highlighting while scrolling
   useSectionObserver(['choose-your-client', 'making-your-first-api-request', 'whats-next'])
   return (
     <div className="px-6 py-8 sm:py-12">
-      {/* Title + intro */}
       <h1 className="text-3xl font-semibold text-zinc-100">Quickstart</h1>
       <p className="mt-3 max-w-4xl text-zinc-300">
         This guide will get you all set up and ready to use the Protocol API. We'll cover how to get started
@@ -14,7 +12,6 @@ export default function Quickstart() {
         to find all the information you need to take full advantage of our powerful REST API.
       </p>
 
-      {/* Info callout */}
       <div className="mt-6 rounded-xl border border-emerald-400/25 bg-emerald-500/10 p-4 sm:p-5">
         <div className="flex items-start gap-3">
           <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-400/15 text-emerald-300">
@@ -29,8 +26,7 @@ export default function Quickstart() {
         </div>
       </div>
 
-      {/* Choose your client */}
-  <section id="choose-your-client" className="mt-10 scroll-mt-24">
+      <section id="choose-your-client" className="mt-10 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Choose your client</h2>
         <p className="mt-2 max-w-4xl text-zinc-300">
           Before making your first API request, you need to pick which API client you will use. In addition to
@@ -48,8 +44,7 @@ export default function Quickstart() {
         </a>
       </section>
 
-      {/* Making your first API request */}
-  <section id="making-your-first-api-request" className="mt-12 scroll-mt-24">
+      <section id="making-your-first-api-request" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Making your first API request</h2>
         <p className="mt-2 max-w-4xl text-zinc-300">
           After picking your preferred client, you are ready to make your first call to the Protocol API. Below, you
@@ -66,8 +61,7 @@ export default function Quickstart() {
           </svg>
         </a>
       </section>
-      {/* What's next */}
-  <section id="whats-next" className="mt-12 scroll-mt-24">
+      <section id="whats-next" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">What's next?</h2>
         <p className="mt-2 max-w-4xl text-zinc-300">
           Great, you're now set up with an API client and have made your first request to the API. Here are a few
@@ -83,7 +77,6 @@ export default function Quickstart() {
   )
 }
 
-// Shared language list
 const LANGS = ['cURL', 'JavaScript', 'Python', 'PHP']
 
 function Tabs({ value, onChange }) {
@@ -135,7 +128,7 @@ function LanguageInstallTabs() {
 function LanguageRequestTabs() {
   const [active, setActive] = useState('cURL')
   const snippets = {
-    cURL: `curl -G https://api.protocol.chat/v1/conversations \\\n+  -H "Authorization: Bearer {token}" \\\n+  -d limit=10`,
+    cURL: `curl -G https://api.protocol.chat/v1/conversations \\\n+   -H "Authorization: Bearer {token}" \\\n+  -d limit=10`,
     JavaScript: `import { Protocol } from 'protocol-sdk'\nconst client = new Protocol({ apiKey: process.env.PROTOCOL_API_KEY })\nconst conversations = await client.conversations.list({ limit: 10 })\nconsole.log(conversations)`,
     Python: `from protocol_sdk import Protocol\nclient = Protocol(api_key="YOUR_API_KEY")\nfor convo in client.conversations.list(limit=10):\n    print(convo)`,
     PHP: `<?php\nuse Protocol\\Client;\n$client = new Client('YOUR_API_KEY');\n$convos = $client->conversations()->list(['limit' => 10]);\nprint_r($convos);`
