@@ -23,6 +23,7 @@ import Attachments from './pages/resources/Attachments.jsx'
 export default function App() {
   const [menuMounted, setMenuMounted] = useState(false)
   const [menuVisible, setMenuVisible] = useState(false)
+  const [atTop, setAtTop] = useState(true)
 
   const openMenu = () => {
     setMenuMounted(true)
@@ -34,6 +35,13 @@ export default function App() {
     setTimeout(() => setMenuMounted(false), 220)
   }
 
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <BrowserRouter>
       <TitleManager />
@@ -41,11 +49,19 @@ export default function App() {
         
         <div className="px-0">
           <div>
-            <Topbar onMenuClick={openMenu} />
+            <Topbar onMenuClick={openMenu} showBackdrop={atTop} />
             <div aria-hidden className="h-16"></div>
             <div className="flex">
               <Sidebar />
               <main className="flex-1 relative min-w-0 bg-[#18181B]">
+                {/* Top background effect visible only when near top */}
+                <div
+                  aria-hidden
+                  className={`pointer-events-none absolute inset-x-0 top-0 h-[360px] transition-opacity duration-300 ${atTop ? 'opacity-100' : 'opacity-0'}`}
+                >
+                  <div className="absolute inset-0 bg-[radial-gradient(120%_140%_at_50%_-20%,rgba(16,185,129,0.18),rgba(16,185,129,0)_60%)]" />
+                  <div className="absolute inset-0 opacity-20 bg-[linear-gradient(115deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(295deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[length:32px_32px,32px_32px]" />
+                </div>
                 <Routes>
                   <Route path="/" element={<Navigate to="/introduction" replace />} />
                   <Route path="/introduction" element={<Introduction />} />
@@ -106,7 +122,7 @@ function TitleManager() {
   const location = useLocation()
 
   const titles = {
-    '/introduction': 'Introduction',
+    '/introduction': '',
     '/quickstart': 'Quickstart',
     '/sdks': 'SDKs',
     '/authentication': 'Authentication',

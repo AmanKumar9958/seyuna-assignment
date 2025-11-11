@@ -69,7 +69,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                 type="button"
                                 onClick={() => handleClick(item)}
                                 className={
-                                    "flex w-full items-center rounded-md px-3 py-2 text-left text-sm transition-colors hover:text-white " +
+                                    "flex w-full items-center rounded-md px-3 py-2 text-left text-sm transition-colors hover:text-white cursor-pointer " +
                                     (isActive ? 'border-l-2 border-emerald-400 bg-white/5 text-zinc-400' : 'text-zinc-400')
                                 }
                             >
@@ -96,7 +96,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     href="#"
                                                     onClick={onClick}
                                                     className={
-                                                        `block rounded-md px-3 py-2 text-sm transition-colors ` +
+                                                        `block rounded-md px-3 py-2 text-sm transition-colors cursor-pointer ` +
                                                         (isActiveAnchor
                                                             ? 'bg-white/10 text-zinc-100'
                                                             : 'text-zinc-200 hover:text-white')
@@ -129,7 +129,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     href="#"
                                                     onClick={onClick}
                                                     className={
-                                                        `block rounded-md px-3 py-2 text-sm transition-colors ` +
+                                                        `block rounded-md px-3 py-2 text-sm transition-colors cursor-pointer ` +
                                                         (isActiveAnchor
                                                             ? 'bg-white/10 text-zinc-100'
                                                             : 'text-zinc-200 hover:text-white')
@@ -148,7 +148,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                 to={childPath}
                                                 onClick={() => onNavigate && onNavigate()}
                                                 className={({ isActive }) =>
-                                                    `block rounded-md px-3 py-2 text-sm transition-colors ${
+                                                    `block rounded-md px-3 py-2 text-sm transition-colors cursor-pointer ${
                                                         isActive
                                                             ? 'bg-white/10 text-zinc-100'
                                                             : 'text-zinc-200 hover:text-white'

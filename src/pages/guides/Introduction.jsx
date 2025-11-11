@@ -11,18 +11,18 @@ export default function Introduction() {
         integrate your product into the workflows of dozens of devoted Protocol users.
       </p>
       <div className="mt-6 flex flex-wrap gap-3">
-        <button className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-medium text-emerald-950 shadow hover:bg-emerald-400">
+        <button className="inline-flex items-center gap-2 rounded-full bg-[#162C27] px-3 py-1.5 border border-[#2A604F] hover:cursor-pointer text-sm text-[#5DE7B4] shadow hover:border-[#59DDAC]">
           Quickstart
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
             <path d="M13 5a1 1 0 0 0-1 1v4H6a1 1 0 0 0 0 2h6v4a1 1 0 0 0 1.7.7l6-6a1 1 0 0 0 0-1.4l-6-6A1 1 0 0 0 13 5Z" />
           </svg>
         </button>
-        <button className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/5">
+        <button className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 hover:cursor-pointer text-sm text-zinc-200 hover:bg-white/5">
           Explore SDKs
         </button>
       </div>
 
-      <section className="mt-12 rounded-xl border border-white/10 bg-zinc-900/40 p-6">
+      <section className="mt-12 rounded-xl bg-zinc-900/40 p-6">
         <h2 className="text-lg font-semibold text-zinc-100">Getting started</h2>
         <p className="mt-2 max-w-3xl text-zinc-400">
           To get started, create a new application in your{' '}
@@ -32,7 +32,7 @@ export default function Introduction() {
           <a className="text-emerald-400 hover:underline" href="#">integrations directory</a> to reach the Protocol
           community.
         </p>
-        <a className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-emerald-400 hover:underline" href="#">
+        <a className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-emerald-400 hover:text[#0b6d4e]" href="#">
           Get your API key
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
             <path d="M13 5a1 1 0 0 0-1 1v4H6a1 1 0 0 0 0 2h6v4a1 1 0 0 0 1.7.7l6-6a1 1 0 0 0 0-1.4l-6-6A1 1 0 0 0 13 5Z" />
@@ -65,7 +65,7 @@ export default function Introduction() {
 
 function ArticleCard({ title, children }) {
     return (
-    <div className="rounded-xl border border-white/10 bg-zinc-900/60 p-5 hover:border-white/20">
+    <div className="rounded-xl bg-zinc-900/60 p-5">
       <h3 className="mb-2 font-medium text-zinc-100">{title}</h3>
       <p className="text-sm leading-relaxed text-zinc-400">{children}</p>
       <a className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-emerald-400" href="#">
