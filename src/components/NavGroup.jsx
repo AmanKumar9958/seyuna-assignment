@@ -98,7 +98,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     className={
                                                         `block rounded-md px-3 py-2 text-sm transition-colors ` +
                                                         (isActiveAnchor
-                                                            ? 'border-l-2 border-emerald-400 bg-white/10 text-zinc-100'
+                                                            ? 'bg-white/10 text-zinc-100'
                                                             : 'text-zinc-200 hover:text-white')
                                                     }
                                                 >
@@ -131,7 +131,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     className={
                                                         `block rounded-md px-3 py-2 text-sm transition-colors ` +
                                                         (isActiveAnchor
-                                                            ? 'border-l-2 border-emerald-400 bg-white/10 text-zinc-100'
+                                                            ? 'bg-white/10 text-zinc-100'
                                                             : 'text-zinc-200 hover:text-white')
                                                     }
                                                 >
@@ -150,7 +150,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                 className={({ isActive }) =>
                                                     `block rounded-md px-3 py-2 text-sm transition-colors ${
                                                         isActive
-                                                            ? 'border-l-2 border-emerald-400 bg-white/10 text-zinc-100'
+                                                            ? 'bg-white/10 text-zinc-100'
                                                             : 'text-zinc-200 hover:text-white'
                                                     }`
                                                 }
