@@ -45,7 +45,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <TitleManager />
-      <div className="min-h-dvh bg-[#1D202A] text-zinc-200">
+      <div className="min-h-dvh bg-[#18181B] text-zinc-200">
         
         <div className="px-0">
           <div>
