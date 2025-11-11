@@ -2,7 +2,7 @@ import NavGroup from './NavGroup.jsx'
 
 export default function Sidebar() {
     return (
-        <aside className="hidden lg:block w-72 shrink-0 sticky top-20 max-h-[calc(100dvh-5rem)] overflow-y-auto border-r border-white/5 bg-[#18181B] p-4">
+        <aside className="hidden lg:block w-72 shrink-0 sticky top-16 max-h-[calc(100dvh-4rem)] overflow-y-auto border-r border-white/5 bg-[#18181B] p-4">
             <NavGroup
                 title="Guides"
                 items={['Introduction', 'Quickstart', 'SDKs', 'Authentication', 'Pagination', 'Errors', 'Webhooks']}

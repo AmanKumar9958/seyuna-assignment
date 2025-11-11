@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import Topbar from './components/Topbar.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import NavGroup from './components/NavGroup.jsx'
-import PreviewToolbar from './components/PreviewToolbar.jsx'
 
 // Pages (guides)
 import Introduction from './pages/guides/Introduction.jsx'
@@ -39,14 +38,14 @@ export default function App() {
     <BrowserRouter>
       <TitleManager />
       <div className="min-h-dvh bg-[#1D202A] text-zinc-200">
-        <PreviewToolbar />
+        
         <div className="px-0">
           <div>
             <Topbar onMenuClick={openMenu} />
-            <div aria-hidden className="h-14 md:h-16"></div>
+            <div aria-hidden className="h-16"></div>
             <div className="flex">
               <Sidebar />
-              <main className="flex-1 relative min-w-0">
+              <main className="flex-1 relative min-w-0 bg-[#18181B]">
                 <Routes>
                   <Route path="/" element={<Navigate to="/introduction" replace />} />
                   <Route path="/introduction" element={<Introduction />} />

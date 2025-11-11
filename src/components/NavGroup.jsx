@@ -69,20 +69,11 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                 type="button"
                                 onClick={() => handleClick(item)}
                                 className={
-                                    "flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-white/5 " +
-                                    (isActive ? 'bg-white/5 text-emerald-400' : 'text-zinc-300')
+                                    "flex w-full items-center rounded-md px-3 py-2 text-left text-sm transition-colors hover:text-white " +
+                                    (isActive ? 'border-l-2 border-emerald-400 bg-white/5 text-zinc-400' : 'text-zinc-400')
                                 }
                             >
                                 <span>{item}</span>
-                                {hasChildren && (
-                                    <svg
-                                        className={"h-3.5 w-3.5 transition-transform " + (expanded ? 'rotate-90' : '')}
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M7 5l6 5-6 5V5z" />
-                                    </svg>
-                                )}
                             </button>
 
                             {hasChildren && expanded && (
@@ -107,8 +98,8 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     className={
                                                         `block rounded-md px-3 py-2 text-sm transition-colors ` +
                                                         (isActiveAnchor
-                                                            ? 'bg-white/10 text-zinc-100'
-                                                            : 'text-zinc-300 hover:bg-white/10 hover:text-zinc-100')
+                                                            ? 'border-l-2 border-emerald-400 bg-white/10 text-zinc-100'
+                                                            : 'text-zinc-200 hover:text-white')
                                                     }
                                                 >
                                                     {child}
@@ -140,8 +131,8 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     className={
                                                         `block rounded-md px-3 py-2 text-sm transition-colors ` +
                                                         (isActiveAnchor
-                                                            ? 'bg-white/10 text-zinc-100'
-                                                            : 'text-zinc-300 hover:bg-white/10 hover:text-zinc-100')
+                                                            ? 'border-l-2 border-emerald-400 bg-white/10 text-zinc-100'
+                                                            : 'text-zinc-200 hover:text-white')
                                                     }
                                                 >
                                                     {child}
@@ -159,8 +150,8 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                 className={({ isActive }) =>
                                                     `block rounded-md px-3 py-2 text-sm transition-colors ${
                                                         isActive
-                                                            ? 'bg-white/10 text-zinc-100'
-                                                            : 'text-zinc-300 hover:bg-white/10 hover:text-zinc-100'
+                                                            ? 'border-l-2 border-emerald-400 bg-white/10 text-zinc-100'
+                                                            : 'text-zinc-200 hover:text-white'
                                                     }`
                                                 }
                                             >

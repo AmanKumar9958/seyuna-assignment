@@ -4,7 +4,7 @@ import Brand from './Brand.jsx'
 export default function Topbar({ onMenuClick }) {
     return (
         <>
-            <header data-topbar className="fixed inset-x-0 top-16 z-30 border-b border-white/5 bg-zinc-900/80 backdrop-blur supports-backdrop-filter:bg-zinc-900/60">
+            <header data-topbar className="fixed inset-x-0 top-0 z-30 border-b border-white/5 bg-zinc-900/80 backdrop-blur supports-backdrop-filter:bg-zinc-900/60">
                 <div className="px-5 py-3">
                     <div className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-4">
                         <div className="flex items-center gap-3">
