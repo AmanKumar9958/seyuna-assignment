@@ -13,6 +13,7 @@ import Pagination from './pages/guides/Pagination.jsx'
 import Errors from './pages/guides/Errors.jsx'
 import Webhooks from './pages/guides/Webhooks.jsx'
 import DocPager from './components/DocPager.jsx'
+import Footer from './components/Footer.jsx'
 // Pages (resources)
 import Contacts from './pages/resources/Contacts.jsx'
 import Conversations from './pages/resources/Conversations.jsx'
@@ -78,6 +79,7 @@ export default function App() {
                   <Route path="/resources/attachments" element={<Attachments />} />
                 </Routes>
                 <DocPager />
+                <Footer />
               </main>
             </div>
           </div>
