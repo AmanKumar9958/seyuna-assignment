@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import SectionTitle from './SectionTitle.jsx'
+import AnimatedCollapse from './AnimatedCollapse.jsx'
 import { smoothScrollToId } from '../utils/scroll.js'
 
 export default function NavGroup({ title, items, subMap = {}, prefix = '', anchorParent, anchorMap, onNavigate }) {
@@ -76,8 +77,8 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                 <span>{item}</span>
                             </button>
 
-                            {hasChildren && expanded && (
-                                <div className="ml-2 rounded-lg bg-white/5 p-1.5">
+                            {hasChildren && (
+                                <AnimatedCollapse isOpen={expanded} className="ml-2 rounded-lg bg-white/5 p-1.5">
                                     {subMap[item].map((child) => {
                                         const anchorId = anchorMap?.[child]
                                         if (anchorParent && anchorId) {
@@ -159,7 +160,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                             </NavLink>
                                         )
                                     })}
-                                </div>
+                                </AnimatedCollapse>
                             )}
                         </div>
                     )
