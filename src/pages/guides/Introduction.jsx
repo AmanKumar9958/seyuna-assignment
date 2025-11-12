@@ -59,6 +59,18 @@ export default function Introduction() {
           <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
         </div>
       </section>
+
+      <section className='mt-10'>
+        <div className='flex gap-4 items-center'>
+          <h4 className='text-gray-500'>Was this page helpful?</h4>
+
+          {/* Rounded capsule with internal dividing border for Yes / No */}
+          <div className='inline-flex rounded-full border border-gray-600 overflow-hidden'>
+            <button className='hover:text-white px-4 py-2 text-sm text-gray-400 hover:bg-white/5'>Yes</button>
+            <button className='hover:text-white px-4 py-2 text-sm text-gray-400 border-l border-gray-600 hover:bg-white/5'>No</button>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
