@@ -1,11 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, ReactNode } from 'react'
+
+interface AnimatedCollapseProps {
+  isOpen: boolean
+  className?: string
+  children: ReactNode
+}
 
 // Animated height/opacity collapse. Keeps content mounted for smooth close.
 // Props: isOpen (boolean), className (string), children (ReactNode)
-export default function AnimatedCollapse({ isOpen, className = '', children }) {
-  const ref = useRef(null)
-  const [maxHeight, setMaxHeight] = useState(isOpen ? 'none' : '0px')
-  const [opacity, setOpacity] = useState(isOpen ? 1 : 0)
+export default function AnimatedCollapse({ isOpen, className = '', children }: AnimatedCollapseProps) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [maxHeight, setMaxHeight] = useState<string>(isOpen ? 'none' : '0px')
+  const [opacity, setOpacity] = useState<number>(isOpen ? 1 : 0)
 
   useEffect(() => {
     const el = ref.current
@@ -21,7 +27,7 @@ export default function AnimatedCollapse({ isOpen, className = '', children }) {
         // ensure transition runs even if contentHeight was 0
         setMaxHeight(`${el.scrollHeight}px`)
       })
-      const onEnd = (e) => {
+      const onEnd = (e: TransitionEvent) => {
         if (e.propertyName === 'max-height') {
           setMaxHeight('none')
           el.removeEventListener('transitionend', onEnd)

@@ -1,18 +1,18 @@
 import { useEffect, useRef } from 'react'
 
-export default function useSectionObserver(ids = []) {
-  const lastIdRef = useRef(null)
+export default function useSectionObserver(ids: string[] = []) {
+  const lastIdRef = useRef<string | null>(null)
 
   useEffect(() => {
     if (!ids.length || typeof window === 'undefined') return
 
     const sections = ids
       .map((id) => document.getElementById(id))
-      .filter(Boolean)
+      .filter((el): el is HTMLElement => Boolean(el))
 
     if (!sections.length) return
 
-    const emitIfChanged = (id) => {
+    const emitIfChanged = (id: string) => {
       if (!id || lastIdRef.current === id) return
       lastIdRef.current = id
       window.dispatchEvent(new CustomEvent('sectionchange', { detail: id }))

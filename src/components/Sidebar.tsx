@@ -1,6 +1,6 @@
-import NavGroup from './NavGroup.jsx'
+import NavGroup from './NavGroup'
 
-export default function Sidebar() {
+export default function Sidebar(): JSX.Element {
     return (
         <aside className="hidden lg:block w-72 shrink-0 sticky top-16 max-h-[calc(100dvh-4rem)] overflow-y-auto no-scrollbar border-r border-white/5 bg-[#18181B] p-4">
             <NavGroup

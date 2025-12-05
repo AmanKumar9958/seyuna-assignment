@@ -1,4 +1,10 @@
-export function PrimaryButton({ children }) {
+import { ReactNode } from 'react'
+
+interface ButtonProps {
+  children: ReactNode
+}
+
+export function PrimaryButton({ children }: ButtonProps) {
   return (
     <button className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-medium text-emerald-950 shadow hover:bg-emerald-400">
       {children}
@@ -9,7 +15,7 @@ export function PrimaryButton({ children }) {
   )
 }
 
-export function GhostButton({ children }) {
+export function GhostButton({ children }: ButtonProps) {
   return (
     <button className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/5">
       {children}

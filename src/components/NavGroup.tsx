@@ -1,14 +1,24 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
-import SectionTitle from './SectionTitle.jsx'
-import AnimatedCollapse from './AnimatedCollapse.jsx'
-import { smoothScrollToId } from '../utils/scroll.js'
+import SectionTitle from './SectionTitle'
+import AnimatedCollapse from './AnimatedCollapse'
+import { smoothScrollToId } from '../utils/scroll'
 
-export default function NavGroup({ title, items, subMap = {}, prefix = '', anchorParent, anchorMap, onNavigate }) {
-    const [openItem, setOpenItem] = useState(null)
+interface NavGroupProps {
+    title: string;
+    items: string[];
+    subMap?: Record<string, string[]>;
+    prefix?: string;
+    anchorParent?: string;
+    anchorMap?: Record<string, string>;
+    onNavigate?: () => void;
+}
+
+export default function NavGroup({ title, items, subMap = {}, prefix = '', anchorParent, anchorMap, onNavigate }: NavGroupProps) {
+    const [openItem, setOpenItem] = useState<string | null>(null)
     const navigate = useNavigate()
     const location = useLocation()
-    const [activeAnchor, setActiveAnchor] = useState(null)
+    const [activeAnchor, setActiveAnchor] = useState<string | null>(null)
 
     useEffect(() => {
         if (anchorParent && location.pathname === anchorParent) {
@@ -18,7 +28,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
     }, [anchorParent, location.pathname, subMap, anchorMap])
 
     useEffect(() => {
-        const handler = (e) => setActiveAnchor(e.detail)
+        const handler = (e: Event) => setActiveAnchor((e as CustomEvent).detail)
         window.addEventListener('sectionchange', handler)
         return () => window.removeEventListener('sectionchange', handler)
     }, [])
@@ -27,7 +37,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
         setActiveAnchor(null)
     }, [location.pathname])
 
-    const handleClick = (item) => {
+    const handleClick = (item: string) => {
         const hasChildren = subMap[item]?.length
         if (hasChildren) {
             setOpenItem((curr) => (curr === item ? null : item))
@@ -83,7 +93,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                         const anchorId = anchorMap?.[child]
                                         if (anchorParent && anchorId) {
                                             const isActiveAnchor = location.pathname === anchorParent && activeAnchor === anchorId
-                                            const onClick = (e) => {
+                                            const onClick = (e: React.MouseEvent) => {
                                                 e.preventDefault()
                                                 if (location.pathname !== anchorParent) navigate(anchorParent)
                                                 const doScroll = () => smoothScrollToId(anchorId)
@@ -117,7 +127,7 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                 .replace(/[^a-z0-9\s-]/g, '')
                                                 .replace(/\s+/g, '-')
                                             const isActiveAnchor = location.pathname === parentPath && activeAnchor === childAnchor
-                                            const onClick = (e) => {
+                                            const onClick = (e: React.MouseEvent) => {
                                                 e.preventDefault()
                                                 if (location.pathname !== parentPath) navigate(parentPath)
                                                 requestAnimationFrame(() => smoothScrollToId(childAnchor))

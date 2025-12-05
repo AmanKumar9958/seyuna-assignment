@@ -1,6 +1,8 @@
-export default function Messages() {
+import PageContainer from '../../components/PageContainer'
+
+export default function Messages(): JSX.Element {
   return (
-    <div className="px-6 py-8 sm:py-12">
+    <PageContainer>
       <h1 className="text-3xl font-semibold text-zinc-100">Messages</h1>
       <p className="mt-3 max-w-3xl text-zinc-400">Endpoints for sending and retrieving messages.</p>
       <section className="mt-8 rounded-xl border border-white/10 bg-zinc-900/40 p-5">
@@ -28,6 +30,6 @@ export default function Messages() {
         </div>
       </section>
       
-    </div>
+    </PageContainer>
   )
 }

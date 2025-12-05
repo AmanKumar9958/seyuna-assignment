@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
-import Brand from './Brand.jsx'
+import Brand from './Brand'
 
-export default function Topbar({ onMenuClick, showBackdrop = true }) {
-    const searchRef = useRef(null)
+interface TopbarProps {
+    onMenuClick: () => void;
+    showBackdrop?: boolean;
+}
+
+export default function Topbar({ onMenuClick, showBackdrop = true }: TopbarProps) {
+    const searchRef = useRef<HTMLInputElement>(null)
 
     // Focus search with Ctrl/Cmd + K like many docs sites
     useEffect(() => {
-        const onKeyDown = (e) => {
+        const onKeyDown = (e: KeyboardEvent) => {
             const isK = e.key === 'k' || e.key === 'K'
             if (isK && (e.ctrlKey || e.metaKey)) {
                 e.preventDefault()

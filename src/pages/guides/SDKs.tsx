@@ -1,6 +1,8 @@
-export default function SDKs() {
+import PageContainer from '../../components/PageContainer'
+
+export default function SDKs(): JSX.Element {
   return (
-    <div className="px-6 py-8 sm:py-12">
+    <PageContainer>
       <h1 className="text-3xl font-semibold text-zinc-100">SDKs</h1>
       <p className="mt-3 max-w-3xl text-zinc-400">
         Explore official and community SDKs to integrate with the Protocol API using your favorite language.
@@ -30,6 +32,6 @@ export default function SDKs() {
         ))}
       </div>
       
-    </div>
+    </PageContainer>
   )
 }

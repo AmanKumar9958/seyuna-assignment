@@ -1,6 +1,8 @@
-export default function Authentication() {
+import PageContainer from '../../components/PageContainer'
+
+export default function Authentication(): JSX.Element {
   return (
-    <div className="px-6 py-8 sm:py-12">
+    <PageContainer>
       <h1 className="text-3xl font-semibold text-zinc-100">Authentication</h1>
       <p className="mt-3 max-w-3xl text-zinc-400">
         Learn how to authenticate requests using API keys and recommended security practices.
@@ -32,6 +34,6 @@ export default function Authentication() {
           </div>
         </div>
       </section>
-    </div>
+    </PageContainer>
   )
 }

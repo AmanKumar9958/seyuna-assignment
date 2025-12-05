@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import useSectionObserver from '../../hooks/useSectionObserver.js'
+import useSectionObserver from '../../hooks/useSectionObserver'
+import PageContainer from '../../components/PageContainer'
 
-export default function Quickstart() {
+export default function Quickstart(): JSX.Element {
   useSectionObserver(['choose-your-client', 'making-your-first-api-request', 'whats-next'])
   return (
-    <div className="px-6 py-8 sm:py-12">
+    <PageContainer>
       <h1 className="text-3xl font-semibold text-zinc-100">Quickstart</h1>
       <p className="mt-3 max-w-4xl text-zinc-300">
         This guide will get you all set up and ready to use the Protocol API. We'll cover how to get started
@@ -73,13 +74,18 @@ export default function Quickstart() {
           <li className="list-disc"><a href="#" className="hover:underline">Learn about the different error messages in Protocol</a></li>
         </ul>
       </section>
-    </div>
+    </PageContainer>
   )
 }
 
 const LANGS = ['cURL', 'JavaScript', 'Python', 'PHP']
 
-function Tabs({ value, onChange }) {
+interface TabsProps {
+  value: string;
+  onChange: (lang: string) => void;
+}
+
+function Tabs({ value, onChange }: TabsProps) {
   return (
     <div role="tablist" aria-label="Language selector" className="flex items-center gap-6 border-b border-white/5 px-4 py-3 text-sm">
       {LANGS.map(lang => {
@@ -105,9 +111,9 @@ function Tabs({ value, onChange }) {
   )
 }
 
-function LanguageInstallTabs() {
-  const [active, setActive] = useState('cURL')
-  const snippets = {
+function LanguageInstallTabs(): JSX.Element {
+  const [active, setActive] = useState<string>('cURL')
+  const snippets: Record<string, string> = {
     cURL: `# cURL is most likely already installed on your machine\ncurl --version`,
     JavaScript: `# Install the JavaScript SDK\nnpm install protocol-sdk\n# or\nyarn add protocol-sdk\n# or\npnpm add protocol-sdk`,
     Python: `# Install the Python SDK\npip install protocol_sdk`,
@@ -125,9 +131,9 @@ function LanguageInstallTabs() {
   )
 }
 
-function LanguageRequestTabs() {
-  const [active, setActive] = useState('cURL')
-  const snippets = {
+function LanguageRequestTabs(): JSX.Element {
+  const [active, setActive] = useState<string>('cURL')
+  const snippets: Record<string, string> = {
     cURL: `curl -G https://api.protocol.chat/v1/conversations \\\n+   -H "Authorization: Bearer {token}" \\\n+  -d limit=10`,
     JavaScript: `import { Protocol } from 'protocol-sdk'\nconst client = new Protocol({ apiKey: process.env.PROTOCOL_API_KEY })\nconst conversations = await client.conversations.list({ limit: 10 })\nconsole.log(conversations)`,
     Python: `from protocol_sdk import Protocol\nclient = Protocol(api_key="YOUR_API_KEY")\nfor convo in client.conversations.list(limit=10):\n    print(convo)`,

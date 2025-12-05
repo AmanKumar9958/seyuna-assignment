@@ -1,4 +1,4 @@
-export default function Brand() {
+export default function Brand(): JSX.Element {
   return (
     <div className="flex items-center gap-2">
       <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-emerald-500/20 text-emerald-400">

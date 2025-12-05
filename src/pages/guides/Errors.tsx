@@ -1,6 +1,8 @@
-export default function Errors() {
+import PageContainer from '../../components/PageContainer'
+
+export default function Errors(): JSX.Element {
   return (
-    <div className="px-6 py-8 sm:py-12">
+    <PageContainer>
       <h1 className="text-3xl font-semibold text-zinc-100">Errors</h1>
       <p className="mt-3 max-w-3xl text-zinc-400">
         Understand common error responses and how to handle them gracefully in your integration.
@@ -15,6 +17,6 @@ export default function Errors() {
           <p className="mt-2 text-sm text-zinc-400">Errors include a code, message, and optional details to help debugging.</p>
         </div>
       </section>
-    </div>
+    </PageContainer>
   )
 }

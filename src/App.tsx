@@ -1,30 +1,30 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import Topbar from './components/Topbar.jsx'
-import Sidebar from './components/Sidebar.jsx'
-import NavGroup from './components/NavGroup.jsx'
+import Topbar from './components/Topbar'
+import Sidebar from './components/Sidebar'
+import NavGroup from './components/NavGroup'
 
 // Pages (guides)
-import Introduction from './pages/guides/Introduction.jsx'
-import Quickstart from './pages/guides/Quickstart.jsx'
-import SDKs from './pages/guides/SDKs.jsx'
-import Authentication from './pages/guides/Authentication.jsx'
-import Pagination from './pages/guides/Pagination.jsx'
-import Errors from './pages/guides/Errors.jsx'
-import Webhooks from './pages/guides/Webhooks.jsx'
-import DocPager from './components/DocPager.jsx'
-import Footer from './components/Footer.jsx'
+import Introduction from './pages/guides/Introduction'
+import Quickstart from './pages/guides/Quickstart'
+import SDKs from './pages/guides/SDKs'
+import Authentication from './pages/guides/Authentication'
+import Pagination from './pages/guides/Pagination'
+import Errors from './pages/guides/Errors'
+import Webhooks from './pages/guides/Webhooks'
+import DocPager from './components/DocPager'
+import Footer from './components/Footer'
 // Pages (resources)
-import Contacts from './pages/resources/Contacts.jsx'
-import Conversations from './pages/resources/Conversations.jsx'
-import Messages from './pages/resources/Messages.jsx'
-import Groups from './pages/resources/Groups.jsx'
-import Attachments from './pages/resources/Attachments.jsx'
+import Contacts from './pages/resources/Contacts'
+import Conversations from './pages/resources/Conversations'
+import Messages from './pages/resources/Messages'
+import Groups from './pages/resources/Groups'
+import Attachments from './pages/resources/Attachments'
 
-export default function App() {
-  const [menuMounted, setMenuMounted] = useState(false)
-  const [menuVisible, setMenuVisible] = useState(false)
-  const [atTop, setAtTop] = useState(true)
+export default function App(): JSX.Element {
+  const [menuMounted, setMenuMounted] = useState<boolean>(false)
+  const [menuVisible, setMenuVisible] = useState<boolean>(false)
+  const [atTop, setAtTop] = useState<boolean>(true)
 
   const openMenu = () => {
     setMenuMounted(true)
@@ -61,7 +61,7 @@ export default function App() {
                   className={`pointer-events-none absolute inset-x-0 top-0 h-[360px] transition-opacity duration-300 ${atTop ? 'opacity-100' : 'opacity-0'}`}
                 >
                   <div className="absolute inset-0 bg-[radial-gradient(120%_140%_at_50%_-20%,rgba(16,185,129,0.18),rgba(16,185,129,0)_60%)]" />
-                  <div className="absolute inset-0 opacity-20 bg-[linear-gradient(115deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(295deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[length:32px_32px,32px_32px]" />
+                  <div className="absolute inset-0 opacity-20 bg-[linear-gradient(115deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(295deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-size-[32px_32px,32px_32px]" />
                 </div>
                 <Routes>
                   <Route path="/" element={<Navigate to="/introduction" replace />} />
@@ -123,7 +123,7 @@ export default function App() {
 function TitleManager() {
   const location = useLocation()
 
-  const titles = {
+  const titles: Record<string, string> = {
     '/introduction': '',
     '/quickstart': 'Quickstart',
     '/sdks': 'SDKs',
@@ -165,7 +165,11 @@ function TitleManager() {
   return null
 }
 
-function MobileNav({ closeMenu }) {
+interface MobileNavProps {
+  closeMenu: () => void;
+}
+
+function MobileNav({ closeMenu }: MobileNavProps) {
   return (
     <>
       <NavGroup

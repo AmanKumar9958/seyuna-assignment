@@ -1,10 +1,12 @@
-import useSectionObserver from '../../hooks/useSectionObserver.js'
+import PageContainer from '../../components/PageContainer'
+import useSectionObserver from '../../hooks/useSectionObserver'
+import { ReactNode } from 'react'
 
-export default function Introduction() {
+export default function Introduction(): JSX.Element {
   useSectionObserver(['guides', 'resources'])
 
   return (
-    <div className="px-6 py-8 sm:py-12">
+    <PageContainer>
       <h1 className="text-3xl font-semibold text-zinc-100">API Documentation</h1>
       <p className="mt-3 max-w-3xl text-zinc-400">
         Use the Protocol API to access contacts, conversations, group messages, and more and seamlessly
@@ -71,11 +73,16 @@ export default function Introduction() {
           </div>
         </div>
       </section>
-    </div>
+    </PageContainer>
   )
 }
 
-function ArticleCard({ title, children }) {
+interface CardProps {
+  title: string;
+  children: ReactNode;
+}
+
+function ArticleCard({ title, children }: CardProps) {
     return (
     <div className="rounded-xl bg-zinc-900/60 p-5">
       <h3 className="mb-2 font-medium text-zinc-100">{title}</h3>
@@ -90,7 +97,7 @@ function ArticleCard({ title, children }) {
   )
 }
 
-function ResourceCard({ title, children }) {
+function ResourceCard({ title, children }: CardProps) {
   return (
     <div className="rounded-2xl border border-white/10 bg-zinc-900/20 p-6">
       <h3 className="mb-2 font-medium text-zinc-100">{title}</h3>

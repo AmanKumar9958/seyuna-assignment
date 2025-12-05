@@ -1,6 +1,8 @@
-export default function Pagination() {
+import PageContainer from '../../components/PageContainer'
+
+export default function Pagination(): JSX.Element {
   return (
-    <div className="px-6 py-8 sm:py-12">
+    <PageContainer>
       <h1 className="text-3xl font-semibold text-zinc-100">Pagination</h1>
       <p className="mt-3 max-w-3xl text-zinc-400">
         Work with large datasets efficiently using pagination parameters and cursors.
@@ -12,6 +14,6 @@ export default function Pagination() {
           <li><span className="font-medium text-zinc-300">cursor</span> — opaque token pointing to next page</li>
         </ul>
       </section>
-    </div>
+    </PageContainer>
   )
 }

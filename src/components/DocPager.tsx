@@ -1,6 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
 
-const ROUTES = [
+interface RouteItem {
+    path: string;
+    label: string;
+}
+
+const ROUTES: RouteItem[] = [
     { path: '/introduction', label: 'Introduction' },
     { path: '/quickstart', label: 'Quickstart' },
     { path: '/sdks', label: 'SDKs' },
