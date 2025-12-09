@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import SectionTitle from './SectionTitle'
 import AnimatedCollapse from './AnimatedCollapse'
@@ -19,6 +19,8 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
     const navigate = useNavigate()
     const location = useLocation()
     const [activeAnchor, setActiveAnchor] = useState<string | null>(null)
+    const navRef = useRef<HTMLElement>(null)
+    const [indicatorStyle, setIndicatorStyle] = useState({ top: 0, height: 0, opacity: 0 })
 
     useEffect(() => {
         if (anchorParent && location.pathname === anchorParent) {
@@ -36,6 +38,34 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
     useEffect(() => {
         setActiveAnchor(null)
     }, [location.pathname])
+
+    useEffect(() => {
+        const updateIndicator = () => {
+            if (!navRef.current) return
+            const activeEl = navRef.current.querySelector('[data-active="true"]') as HTMLElement
+            if (activeEl) {
+                const navRect = navRef.current.getBoundingClientRect()
+                const activeRect = activeEl.getBoundingClientRect()
+                const top = activeRect.top - navRect.top
+                // Center a 24px (h-6) indicator vertically within the item
+                const indicatorHeight = 24
+                const centeredTop = top + (activeRect.height - indicatorHeight) / 2
+                
+                setIndicatorStyle({
+                    top: centeredTop,
+                    height: indicatorHeight,
+                    opacity: 1
+                })
+            } else {
+                setIndicatorStyle(prev => ({ ...prev, opacity: 0 }))
+            }
+        }
+
+        // Update immediately and after a short delay to handle animations/layout shifts
+        updateIndicator()
+        const timeout = setTimeout(updateIndicator, 350) // slightly longer than transition
+        return () => clearTimeout(timeout)
+    }, [location.pathname, activeAnchor, openItem])
 
     const handleClick = (item: string) => {
         const hasChildren = subMap[item]?.length
@@ -66,7 +96,15 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
 
     return (
         <SectionTitle title={title}>
-            <nav className="mt-3 flex flex-col gap-1">
+            <nav ref={navRef} className="relative mt-3 flex flex-col gap-1 border-l border-white/5">
+                <div
+                    className="absolute -left-[1px] top-0 w-[2px] bg-emerald-400 transition-[transform,height,opacity] duration-200 ease-out"
+                    style={{
+                        transform: `translateY(${indicatorStyle.top}px)`,
+                        height: `${indicatorStyle.height}px`,
+                        opacity: indicatorStyle.opacity
+                    }}
+                />
                 {items.map((item) => {
                     const slug = item.toLowerCase().replace(/\s+/g, '-')
                     const itemPath = prefix ? `/${prefix}/${slug}` : `/${slug}`
@@ -79,16 +117,17 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                             <button
                                 type="button"
                                 onClick={() => handleClick(item)}
+                                data-active={isActive}
                                 className={
-                                    "flex w-full items-center rounded-md px-3 py-2 text-left text-sm transition-colors hover:text-white cursor-pointer " +
-                                    (isActive ? 'border-l-2 border-emerald-400 bg-white/5 text-zinc-400' : 'text-zinc-400')
+                                    "relative flex w-full items-center py-2 pl-4 text-left text-sm transition-colors hover:text-white cursor-pointer " +
+                                    (isActive ? 'text-zinc-100 font-medium' : 'text-zinc-400')
                                 }
                             >
                                 <span>{item}</span>
                             </button>
 
                             {hasChildren && (
-                                <AnimatedCollapse isOpen={expanded} className="ml-2 rounded-lg bg-white/5 p-1.5">
+                                <AnimatedCollapse isOpen={expanded} className="mt-1 flex flex-col gap-1">
                                     {subMap[item].map((child) => {
                                         const anchorId = anchorMap?.[child]
                                         if (anchorParent && anchorId) {
@@ -106,11 +145,12 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     key={child}
                                                     href="#"
                                                     onClick={onClick}
+                                                    data-active={isActiveAnchor}
                                                     className={
-                                                        `block rounded-md px-3 py-2 text-sm transition-colors cursor-pointer ` +
+                                                        `block rounded-md py-2 pl-8 text-sm transition-colors cursor-pointer ` +
                                                         (isActiveAnchor
-                                                            ? 'bg-white/10 text-zinc-100'
-                                                            : 'text-zinc-200 hover:text-white')
+                                                            ? 'bg-white/5 text-zinc-100 font-medium'
+                                                            : 'text-zinc-400 hover:text-white')
                                                     }
                                                 >
                                                     {child}
@@ -139,11 +179,12 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                     key={child}
                                                     href="#"
                                                     onClick={onClick}
+                                                    data-active={isActiveAnchor}
                                                     className={
-                                                        `block rounded-md px-3 py-2 text-sm transition-colors cursor-pointer ` +
+                                                        `block rounded-md py-2 pl-8 text-sm transition-colors cursor-pointer ` +
                                                         (isActiveAnchor
-                                                            ? 'bg-white/10 text-zinc-100'
-                                                            : 'text-zinc-200 hover:text-white')
+                                                            ? 'bg-white/5 text-zinc-100 font-medium'
+                                                            : 'text-zinc-400 hover:text-white')
                                                     }
                                                 >
                                                     {child}
@@ -159,14 +200,16 @@ export default function NavGroup({ title, items, subMap = {}, prefix = '', ancho
                                                 to={childPath}
                                                 onClick={() => onNavigate && onNavigate()}
                                                 className={({ isActive }) =>
-                                                    `block rounded-md px-3 py-2 text-sm transition-colors cursor-pointer ${
+                                                    `block py-2 pl-8 text-sm transition-colors cursor-pointer ${
                                                         isActive
-                                                            ? 'bg-white/10 text-zinc-100'
-                                                            : 'text-zinc-200 hover:text-white'
+                                                            ? 'text-zinc-100 font-medium'
+                                                            : 'text-zinc-400 hover:text-white'
                                                     }`
                                                 }
                                             >
-                                                {child}
+                                                {({ isActive }) => (
+                                                    <span data-active={isActive}>{child}</span>
+                                                )}
                                             </NavLink>
                                         )
                                     })}

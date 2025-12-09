@@ -22,9 +22,21 @@ import Groups from './pages/resources/Groups'
 import Attachments from './pages/resources/Attachments'
 
 export default function App(): JSX.Element {
+  return (
+    <BrowserRouter>
+      <TitleManager />
+      <Layout />
+    </BrowserRouter>
+  )
+}
+
+function Layout() {
   const [menuMounted, setMenuMounted] = useState<boolean>(false)
   const [menuVisible, setMenuVisible] = useState<boolean>(false)
   const [atTop, setAtTop] = useState<boolean>(true)
+  const location = useLocation()
+
+  const isIntroPage = location.pathname === '/' || location.pathname === '/introduction'
 
   const openMenu = () => {
     setMenuMounted(true)
@@ -33,7 +45,7 @@ export default function App(): JSX.Element {
 
   const closeMenu = () => {
     setMenuVisible(false)
-    setTimeout(() => setMenuMounted(false), 220)
+    setTimeout(() => setMenuMounted(false), 300)
   }
 
   useEffect(() => {
@@ -44,79 +56,55 @@ export default function App(): JSX.Element {
   }, [])
 
   return (
-    <BrowserRouter>
-      <TitleManager />
-      <div className="min-h-dvh bg-[#18181B] text-zinc-200">
-        
-        <div className="px-0">
-          <div>
-            <Topbar onMenuClick={openMenu} showBackdrop={atTop} />
+    <div className="min-h-dvh bg-[#18181B] text-zinc-200">
+      <div className="px-0">
+        <div>
+          <Sidebar />
+          <Topbar onMenuClick={menuVisible ? closeMenu : openMenu} isMenuOpen={menuVisible} showBackdrop={atTop && isIntroPage} />
+          <div className="lg:pl-72">
             <div aria-hidden className="h-16"></div>
-            <div className="flex">
-              <Sidebar />
-              <main className="flex-1 relative min-w-0 bg-[#18181B]">
-                {/* Top background effect visible only when near top */}
-                <div
-                  aria-hidden
-                  className={`pointer-events-none absolute inset-x-0 top-0 h-[360px] transition-opacity duration-300 ${atTop ? 'opacity-100' : 'opacity-0'}`}
-                >
-                  <div className="absolute inset-0 bg-[radial-gradient(120%_140%_at_50%_-20%,rgba(16,185,129,0.18),rgba(16,185,129,0)_60%)]" />
-                  <div className="absolute inset-0 opacity-20 bg-[linear-gradient(115deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(295deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-size-[32px_32px,32px_32px]" />
-                </div>
-                <Routes>
-                  <Route path="/" element={<Navigate to="/introduction" replace />} />
-                  <Route path="/introduction" element={<Introduction />} />
-                  <Route path="/quickstart" element={<Quickstart />} />
-                  <Route path="/sdks" element={<SDKs />} />
-                  <Route path="/authentication" element={<Authentication />} />
-                  <Route path="/pagination" element={<Pagination />} />
-                  <Route path="/errors" element={<Errors />} />
-                  <Route path="/webhooks" element={<Webhooks />} />
-                  <Route path="/resources/contacts" element={<Contacts />} />
-                  <Route path="/resources/conversations" element={<Conversations />} />
-                  <Route path="/resources/messages" element={<Messages />} />
-                  <Route path="/resources/groups" element={<Groups />} />
-                  <Route path="/resources/attachments" element={<Attachments />} />
-                </Routes>
-                <DocPager />
-                <Footer />
-              </main>
-            </div>
+            <main className="relative min-w-0 bg-[#18181B]">
+              {/* Top background effect visible only when near top */}
+              <div
+                aria-hidden
+                className={`pointer-events-none absolute inset-x-0 top-0 h-[360px] transition-opacity duration-300 ${atTop && isIntroPage ? 'opacity-100' : 'opacity-0'}`}
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(120%_140%_at_50%_-20%,rgba(16,185,129,0.18),rgba(16,185,129,0)_60%)]" />
+                <div className="absolute inset-0 opacity-20 bg-[linear-gradient(115deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(295deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-size-[32px_32px,32px_32px]" />
+              </div>
+              <Routes>
+                <Route path="/" element={<Navigate to="/introduction" replace />} />
+                <Route path="/introduction" element={<Introduction />} />
+                <Route path="/quickstart" element={<Quickstart />} />
+                <Route path="/sdks" element={<SDKs />} />
+                <Route path="/authentication" element={<Authentication />} />
+                <Route path="/pagination" element={<Pagination />} />
+                <Route path="/errors" element={<Errors />} />
+                <Route path="/webhooks" element={<Webhooks />} />
+                <Route path="/resources/contacts" element={<Contacts />} />
+                <Route path="/resources/conversations" element={<Conversations />} />
+                <Route path="/resources/messages" element={<Messages />} />
+                <Route path="/resources/groups" element={<Groups />} />
+                <Route path="/resources/attachments" element={<Attachments />} />
+              </Routes>
+              <DocPager />
+              <Footer />
+            </main>
           </div>
         </div>
-        {menuMounted && (
-          <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true">
-            <div
-              className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-200 ${
-                menuVisible ? 'opacity-100' : 'opacity-0'
-              }`}
-              onClick={closeMenu}
-            ></div>
-            <div
-              className={`absolute inset-y-0 left-0 w-80 max-w-[80%] overflow-y-auto border-r border-white/10 bg-[#18181B] p-5 shadow-xl transform transition-transform duration-200 ${
-                menuVisible ? 'translate-x-0' : '-translate-x-full'
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-zinc-100">Protocol</span>
-                <button
-                  onClick={closeMenu}
-                  aria-label="Close menu"
-                  className="rounded-md p-2 text-zinc-400 hover:bg-white/5 hover:text-zinc-200"
-                >
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                    <path d="M6.34 4.93a1 1 0 0 0-1.41 1.41L10.59 12l-5.66 5.66a1 1 0 1 0 1.41 1.41L12 13.41l5.66 5.66a1 1 0 0 0 1.41-1.41L13.41 12l5.66-5.66a1 1 0 0 0-1.41-1.41L12 10.59 6.34 4.93Z" />
-                  </svg>
-                </button>
-              </div>
-              <div className="mt-6 space-y-8">
-                <MobileNav closeMenu={closeMenu} />
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-    </BrowserRouter>
+      {menuMounted && (
+        <div
+          className={`fixed inset-x-0 top-16 bottom-0 z-20 overflow-y-auto border-t border-white/10 bg-[#18181B] transition-transform duration-300 ease-in-out lg:hidden ${
+            menuVisible ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <div className="p-4">
+            <MobileNav closeMenu={closeMenu} />
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -186,12 +174,6 @@ function MobileNav({ closeMenu }: MobileNavProps) {
         prefix="resources"
         onNavigate={closeMenu}
       />
-      <button
-        onClick={closeMenu}
-        className="mt-4 w-full rounded-md border border-white/10 px-3 py-2 text-sm text-zinc-300 hover:bg-white/5"
-      >
-        Close menu
-      </button>
     </>
   )
 }

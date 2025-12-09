@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+:root {
+  font-family: 'Inter', sans-serif;
+}
+
 /* Hide scrollbars but preserve scroll behavior */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; /* IE and Edge */ scrollbar-width: none; /* Firefox */ }

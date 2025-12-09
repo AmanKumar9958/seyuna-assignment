@@ -1,13 +1,14 @@
 import PageContainer from '../../components/PageContainer'
 import useSectionObserver from '../../hooks/useSectionObserver'
-import { ReactNode } from 'react'
+import { ReactNode, useRef } from 'react'
+import { FiUser, FiMessageCircle, FiMail, FiUsers } from 'react-icons/fi'
 
 export default function Introduction(): JSX.Element {
   useSectionObserver(['guides', 'resources'])
 
   return (
     <PageContainer>
-      <h1 className="text-3xl font-semibold text-zinc-100">API Documentation</h1>
+      <h1 className="text-2xl md:text-3xl font-semibold text-zinc-100">API Documentation</h1>
       <p className="mt-3 max-w-3xl text-zinc-400">
         Use the Protocol API to access contacts, conversations, group messages, and more and seamlessly
         integrate your product into the workflows of dozens of devoted Protocol users.
@@ -24,7 +25,7 @@ export default function Introduction(): JSX.Element {
         </button>
       </div>
 
-      <section className="mt-12 rounded-xl bg-zinc-900/40 p-6">
+      <section className="mt-12 rounded-xl bg-zinc-900/40">
         <h2 className="text-lg font-semibold text-zinc-100">Getting started</h2>
         <p className="mt-2 max-w-3xl text-zinc-400">
           To get started, create a new application in your{' '}
@@ -55,10 +56,18 @@ export default function Introduction(): JSX.Element {
       <section id="resources" className="mt-12 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-100">Resources</h2>
         <div className="mt-4 grid gap-6 lg:grid-cols-4">
-          <ResourceCard title="Contacts">Learn about the contact model and how to create, retrieve, update, delete, and list contacts.</ResourceCard>
-          <ResourceCard title="Conversations">Learn about the conversation model and how to create, retrieve, update, delete, and list conversations.</ResourceCard>
-          <ResourceCard title="Messages">Learn about the message model and how to create, retrieve, update, delete, and list messages.</ResourceCard>
-          <ResourceCard title="Groups">Learn about the group model and how to create, retrieve, update, delete, and list groups.</ResourceCard>
+          <ResourceCard title="Contacts" icon={<FiUser className="h-5 w-5" />}>
+            Learn about the contact model and how to create, retrieve, update, delete, and list contacts.
+          </ResourceCard>
+          <ResourceCard title="Conversations" icon={<FiMessageCircle className="h-5 w-5" />}>
+            Learn about the conversation model and how to create, retrieve, update, delete, and list conversations.
+          </ResourceCard>
+          <ResourceCard title="Messages" icon={<FiMail className="h-5 w-5" />}>
+            Learn about the message model and how to create, retrieve, update, delete, and list messages.
+          </ResourceCard>
+          <ResourceCard title="Groups" icon={<FiUsers className="h-5 w-5" />}>
+            Learn about the group model and how to create, retrieve, update, delete, and list groups.
+          </ResourceCard>
         </div>
       </section>
 
@@ -97,11 +106,44 @@ function ArticleCard({ title, children }: CardProps) {
   )
 }
 
-function ResourceCard({ title, children }: CardProps) {
+interface ResourceCardProps extends CardProps {
+  icon: ReactNode;
+}
+
+function ResourceCard({ title, children, icon }: ResourceCardProps) {
+  const divRef = useRef<HTMLDivElement>(null)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!divRef.current) return
+
+    const div = divRef.current
+    const rect = div.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    div.style.setProperty('--mouse-x', `${x}px`)
+    div.style.setProperty('--mouse-y', `${y}px`)
+  }
+
   return (
-    <div className="rounded-2xl border border-white/10 bg-zinc-900/20 p-6">
-      <h3 className="mb-2 font-medium text-zinc-100">{title}</h3>
-      <p className="text-sm leading-relaxed text-zinc-400">{children}</p>
+    <div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      className="group relative rounded-2xl border border-white/10 bg-zinc-900/20 p-6 transition-colors hover:border-zinc-100/20"
+    >
+      <div
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(20, 138, 102, 0.15), transparent 40%)`,
+        }}
+      />
+      <div className="relative">
+        <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-400 transition-colors group-hover:border-[#148A66] group-hover:text-[#148A66]">
+          {icon}
+        </div>
+        <h3 className="mb-2 font-medium text-zinc-100">{title}</h3>
+        <p className="text-sm leading-relaxed text-zinc-400">{children}</p>
+      </div>
     </div>
   )
 }
