@@ -2,7 +2,7 @@ export default function Footer(): JSX.Element {
     const year = new Date().getFullYear()
     return (
         <footer className="mt-10 mb-16 border-t border-white/10">
-            <div className="mx-auto max-w-[1100px] flex items-center justify-between px-6 py-6 text-sm">
+            <div className="mx-auto max-w-[1150px] flex items-center justify-between px-8 md:px-12 py-6 text-sm">
                 <p className="text-zinc-400">© Copyright {year}. All rights reserved.</p>
                 <div className="flex items-center gap-5 text-zinc-500">
                     <a

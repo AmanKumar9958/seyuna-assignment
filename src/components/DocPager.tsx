@@ -31,8 +31,8 @@ export default function DocPager() {
     if (!prev && !next) return null
 
     return (
-        <div className="px-6 pb-10 pt-6 sm:pt-8">
-            <div className="mx-auto max-w-5xl border-t border-white/10 pt-6">
+        <div className="px-8 md:px-12 pb-10 pt-6 sm:pt-8">
+            <div className="mx-auto max-w-[1150px] border-t border-white/10 pt-6">
                 <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0 flex-1">
                         {prev ? (
